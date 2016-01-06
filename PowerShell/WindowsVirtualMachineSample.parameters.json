@@ -5,7 +5,13 @@
     "adminUsername": {
       "value": null
     },
+    "adminPassword": {
+      "value": null
+    },
     "dnsNameForPublicIP": {
+      "value": null
+    },
+    "windowsOSVersion": {
       "value": null
     }
   }
