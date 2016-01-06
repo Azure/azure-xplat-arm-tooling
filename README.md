@@ -41,7 +41,7 @@ See [Authoring Azure Resource Manager Templates](https://azure.microsoft.com/en-
 
 #### OSX/Linux
 * Open a terminal window and run `azure login` to login.
-* If the account has access to multiple subscriptions, use `azure account set <subscription name>` to switch to the one you want to use.
+* If the account has access to multiple subscriptions, use `azure account set <subscription name or id>` to switch to the one you want to use.
 * Update the values in the **Bash/LinuxVirtualMachineSample.parameters.json** file.
 * Run the bash Script: `Bash/azure-rg-deploy.sh -f Bash/LinuxVirtualMachineSample.json -l <Azure Region>`.
 
