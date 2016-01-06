@@ -22,11 +22,17 @@ done
 templateName="$( basename "${templateFile%.*}" )"
 templateDirectory="$( dirname "$templateFile")"
 
-parametersFile=${parametersFile:-${templateDirectory}/${templateName}".parameters.json"}
-resourceGroupName=${resourceGroupName:-${templateName}}
+if [[ -z $parametersFile ]]
+then
+    parametersFile=${parametersFile:-${templateDirectory}/${templateName}".parameters.json"}
+fi
 
-artifactsSourceFolder1="/Artifacts"
-artifactsSourceFolder=$templateDirectory$artifactsSourceFolder1
+if [[ -z $resourceGroupName ]]
+then
+    resourceGroupName=${resourceGroupName:-${templateName}}
+fi
+
+artifactsSourceFolder=$templateDirectory"/Artifacts"
 
 parameterJson=$( cat "$parametersFile" | jq '.parameters' )
 
@@ -34,7 +40,7 @@ azure config mode arm
 
 # When $artifactsSourceFolder contains files, they will be staged in a storage account.
 artifactsCount=$( ls "$artifactsSourceFolder" 2>/dev/null | wc -l )
-if [ ! -z "$artifactsSourceFolder" ] && [ -r "$artifactsSourceFolder" ] && [ $artifactsCount -gt 0 ]
+if [[ ! -z "$artifactsSourceFolder" ]] && [[ -r "$artifactsSourceFolder" ]] && [[ $artifactsCount -gt 0 ]]
 then
     subscriptionId=$( azure account show --json | jq -r '.[0].id' )
     artifactsResourceGroupName="ARM_Deploy_Staging"
