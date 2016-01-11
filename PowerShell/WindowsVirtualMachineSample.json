@@ -31,7 +31,7 @@
                 "2012-R2-Datacenter"
             ],
             "metadata": {
-                "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter."
+                "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
             }
         },
         "_artifactsLocation": {
@@ -235,8 +235,8 @@
             ]
         },
         {
-          "name": "EnableWebServerRole",
-          "type": "extensions",
+          "name": "[concat(variables('vmName'), '/EnableWebServerRole')]",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-05-01-preview",
           "dependsOn": [

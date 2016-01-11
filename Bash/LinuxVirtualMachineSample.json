@@ -31,7 +31,7 @@
                 "15.04"
             ],
             "metadata": {
-                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values: 12.04.5-LTS, 14.04.2-LTS, 15.04."
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
             }
         },
         "_artifactsLocation": {
@@ -57,6 +57,7 @@
         "virtualNetworkName": "MyVNET",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
+        "ConfigureScriptFileName": "InstallApache.sh",
         "vhdStorageName": "[concat('vhdstorage', uniqueString(resourceGroup().id))]"
     },
     "resources": [
@@ -204,13 +205,19 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(parameters('_artifactsLocation'), '/', variables('DeployFilesScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+                                "[concat(parameters('_artifactsLocation'), '/', variables('ConfigureScriptFileName'), parameters('_artifactsLocationSasToken'))]"
                             ],
-                            "commandToExecute": "[concat('sh ', variables('DeployFilesScriptFileName'))]"
+                            "commandToExecute": "[concat('sh ', variables('ConfigureScriptFileName'))]"
                         }
                     }
                 }
             ]
         }
-    ]
+    ],
+    "outputs": {
+        "fqdn": {
+            "value": "[reference(parameters('dnsNameForPublicIP')).dnsSettings.fqdn]",
+            "type": "string"
+        }
+    }
 }
