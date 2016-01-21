@@ -2,14 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "newStorageAccountName": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 24,
-            "metadata": {
-                "description": "Unique DNS Name for the Storage Account where the Virtual Machine's disks will be placed."
-            }
-        },
         "adminUsername": {
             "type": "string",
             "minLength": 1,
@@ -27,7 +19,7 @@
             "type": "string",
             "minLength": 1,
             "metadata": {
-                "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+                "description": "Globally unique DNS Name for the Public IP used to access the Virtual Machine."
             }
         },
         "ubuntuOSVersion": {
@@ -39,7 +31,7 @@
                 "15.04"
             ],
             "metadata": {
-                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values: 12.04.2-LTS, 12.04.3-LTS, 12.04.4-LTS, 12.04.5-LTS, 12.10, 14.04.2-LTS, 14.10, 15.04."
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
             }
         },
         "_artifactsLocation": {
@@ -57,27 +49,28 @@
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
         "subnetPrefix": "10.0.0.0/24",
-        "storageAccountType": "Standard_LRS",
+        "vhdStorageType": "Standard_LRS",
         "publicIPAddressType": "Dynamic",
-        "vmStorageAccountContainerName": "vhds",
+        "vhdStorageContainerName": "vhds",
         "vmName": "MyUbuntuVM",
         "vmSize": "Standard_D1",
         "virtualNetworkName": "MyVNET",
-        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-        "DeployFilesScriptFileName": "InstallApache.sh"
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
+        "ConfigureScriptFileName": "InstallApache.sh",
+        "vhdStorageName": "[concat('vhdstorage', uniqueString(resourceGroup().id))]"
     },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('newStorageAccountName')]",
-            "apiVersion": "2015-05-01-preview",
+            "name": "[variables('vhdStorageName')]",
+            "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
             "tags": {
                 "displayName": "StorageAccount"
             },
             "properties": {
-                "accountType": "[variables('storageAccountType')]"
+                "accountType": "[variables('vhdStorageType')]"
             }
         },
         {
@@ -138,7 +131,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('dnsNameForPublicIP'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('dnsNameForPublicIP'))]"
                             },
                             "subnet": {
                                 "id": "[variables('subnetRef')]"
@@ -157,7 +150,7 @@
                 "displayName": "VirtualMachine"
             },
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('vhdStorageName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
             "properties": {
@@ -179,7 +172,7 @@
                     "osDisk": {
                         "name": "osdisk",
                         "vhd": {
-                            "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
+                            "uri": "[concat('http://', variables('vhdStorageName'), '.blob.core.windows.net/', variables('vhdStorageContainerName'), '/', variables('OSDiskName'), '.vhd')]"
                         },
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
@@ -188,7 +181,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
                         }
                     ]
                 }
@@ -212,13 +205,19 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(parameters('_artifactsLocation'), '/', variables('DeployFilesScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+                                "[concat(parameters('_artifactsLocation'), '/', variables('ConfigureScriptFileName'), parameters('_artifactsLocationSasToken'))]"
                             ],
-                            "commandToExecute": "[concat('sh ', variables('DeployFilesScriptFileName'))]"
+                            "commandToExecute": "[concat('sh ', variables('ConfigureScriptFileName'))]"
                         }
                     }
                 }
             ]
         }
-    ]
+    ],
+    "outputs": {
+        "fqdn": {
+            "value": "[reference(parameters('dnsNameForPublicIP')).dnsSettings.fqdn]",
+            "type": "string"
+        }
+    }
 }
