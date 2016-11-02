@@ -1,6 +1,19 @@
 /*
 // Azure Resource Manager Template Snippets 
 */
+"Azure Resource Manager (ARM) Template": {
+    "prefix": "arm!",
+    "body": [
+        "{",
+        "    \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",",
+        "    \"contentVersion\": \"1.0.0.0\",",
+        "    \"parameters\": {},",
+        "    \"resources\": [],",
+        "    \"outputs\": {}",
+        "}"
+    ],
+    "description": "Skeleton ARM Template"
+},
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
     "body": [
