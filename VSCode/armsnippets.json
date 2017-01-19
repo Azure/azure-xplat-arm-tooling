@@ -15,14 +15,14 @@
     ],
     "description": "Skeleton ARM Template"
 },
-"Azure Resource Manager (ARM) Variable": {
+"Variable": {
     "prefix": "arm-variable",
     "body": [
         "\"${1:variableName}\": \"${2:variableValue}\""
     ],
     "description": "ARM Variable"
 },
-"Azure Resource Manager (ARM) Parameter": {
+"Parameter": {
     "prefix": "arm-parameter",
     "body": [
         "\"${1:parameterName}\": {",
