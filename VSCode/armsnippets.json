@@ -5,7 +5,7 @@
     "prefix": "arm!",
     "body": [
         "{",
-        "    \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",",
+        "    \"$$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",",
         "    \"contentVersion\": \"1.0.0.0\",",
         "    \"parameters\": {},",
         "    \"variables\": {},",
@@ -14,6 +14,25 @@
         "}"
     ],
     "description": "Skeleton ARM Template"
+},
+"Variable": {
+    "prefix": "arm-variable",
+    "body": [
+        "\"${1:variableName}\": \"${2:variableValue}\""
+    ],
+    "description": "ARM Variable"
+},
+"Parameter": {
+    "prefix": "arm-parameter",
+    "body": [
+        "\"${1:parameterName}\": {",
+        "   \"type\": \"${2:string}\",",
+        "   \"metadata\": {",
+        "        \"description\": \"${3:}\"",
+        "    }",
+        "}"
+    ],
+    "description": "ARM Parameter"
 },
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
