@@ -1087,7 +1087,7 @@
     "body": [
         "{",
         "   \"name\": \"[concat(${solutionName}, [${workSpaceName}])]\",",
-        "   \"location\": \"${West Europe}\",",
+        "   \"location\": \"[resourceGroup().location]\",",
         "   \"tags\": {  },",
         "   \"type\": \"Microsoft.OperationsManagement/solutions\",",
         "   \"apiVersion\": \"2015-11-01-preview\",",
