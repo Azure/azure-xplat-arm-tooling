@@ -1081,4 +1081,35 @@
         "}"
     ],
     "description": "Windows Virtual Machine"
+},
+"OMS Solution": {
+    "prefix": "arm-oms-solution",
+    "body": [
+        "{",
+        "   \"name\": \"[concat(${solutionName}, [${workSpaceName}])]\",",
+        "   \"location\": \"[resourceGroup().location]\",",
+        "   \"tags\": {  },",
+        "   \"type\": \"Microsoft.OperationsManagement/solutions\",",
+        "   \"apiVersion\": \"2015-11-01-preview\",",
+        "   \"dependsOn\": [",
+        "       \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
+        "   ],",
+        "   \"properties\": {",
+        "       \"workspaceResourceId\": \"[resourceId('Microsoft.OperationalInsights/workspaces', ${workSpaceName})]\",",
+        "       \"referencedResources\": [",
+        "       ],",
+        "       \"containedResources\": [",
+        "           \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
+        "       ]",
+        "   },",
+        "   \"plan\": {",
+        "       \"name\": \"[concat(${solutionName}, '[' ,${workSpaceName}, ']')]\",",
+        "       \"Version\": \"${1.0.0.0}\",",
+        "       \"product\": \"${product}\",",
+        "       \"publisher\": \"${publisher}\",",
+        "       \"promotionCode\": \"${}\"",
+        "   }",
+        "}"
+    ],
+    "description": "OMS management solution"
 }
