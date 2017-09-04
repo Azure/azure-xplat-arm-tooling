@@ -26,19 +26,6 @@
     ],
     "description": "Skeleton ARM Parameters Template"
 },
-"Azure Resource Manager (ARM) Metadata Template": {
-    "prefix": "armm!",
-    "body": [
-        "{",
-        "    \"itemDisplayName\": \"Display name for the template\",",
-        "    \"description\": \"Description of the template\",",
-        "    \"summary\": \"A summary of the templates, and what is should be used for\",",
-        "    \"githubUsername\": \"githubUsername\",",
-        "    \"dateUpdated\": \"yyyy-mm-dd\",",
-        "}"
-    ],
-    "description": "Skeleton ARM Metadata Template"
-},
 "Variable": {
     "prefix": "arm-variable",
     "body": [
@@ -58,14 +45,14 @@
     ],
     "description": "ARM Parameter"
 },
-"Deployment Parameter": {
-    "prefix": "arm-deplparameter",
+"Deployment Parameter Value": {
+    "prefix": "arm-paramvalue",
     "body": [
         "\"${1:parameterName}\": {",
         "    \"value\": \"${2:parameterValue}\"",
         "}"
     ],
-    "description": "ARM Parameter used in a azuredeploy.parameters.json file"
+    "description": "ARM Parameter value used in a azuredeploy.parameters.json file"
 },
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
