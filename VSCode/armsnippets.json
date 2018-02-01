@@ -1161,7 +1161,7 @@
         "}"
     ],
     "description": "OMS management solution"
-}
+},
 "DNS Zone":{
     "prefix":"arm-dns-zone",
     "body":[
