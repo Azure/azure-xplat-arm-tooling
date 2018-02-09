@@ -1168,12 +1168,12 @@
         "{",
         "    \"type\": \"Microsoft.Network/dnszones\",",
         "    \"name\": \"${1:dnsZoneName}\",",
-        "    \"apiVersion\": \"2016-04-01\",",
+        "    \"apiVersion\": \"2017-09-01\",",
         "    \"location\": \"global\",",
         "    \"properties\": { }",
         "  }"
     ],
-    "description": "New DNS Zone"
+    "description": "DNS Zone"
 },
 
 
@@ -1183,7 +1183,7 @@
         "{",
         "    \"type\": \"Microsoft.Network/dnszones/${1|A,AAAA,CNAME,MX,NS,PTR,SOA,SRV,TXT|},\",",
         "    \"name\": \"[concat(${2:dnsZoneName}, '/', ${3:newRecordName}))]\",",
-        "    \"apiVersion\": \"2016-04-01\",",
+        "    \"apiVersion\": \"2017-09-01\",",
         "    \"location\": \"global\",",
         "    \"dependsOn\": [",
         "      \"${4:dnsZoneName}\"",
@@ -1195,7 +1195,7 @@
         "    }",
         " }"
     ],
-    "description": "New DNS Record"
+    "description": "DNS Record"
 },
 
 "Azure Container Instance":{
@@ -1204,7 +1204,7 @@
         "{",
             "    \"name\": \"${1:containerGroupName}\",",
             "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
-            "    \"apiVersion\": \"2017-08-01-preview\",",
+            "    \"apiVersion\": \"2017-10-01-preview\",",
             "    \"location\": \"[resourceGroup().location]\",",
             "    \"properties\": {",
             "        \"containers\": [",
@@ -1239,5 +1239,5 @@
             "    }",
             "}"
     ],
-    "description": "New Azure Container Instance"
+    "description": "Azure Container Instance"
 }
