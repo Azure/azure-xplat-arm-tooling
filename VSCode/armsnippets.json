@@ -1161,4 +1161,83 @@
         "}"
     ],
     "description": "OMS management solution"
+},
+"DNS Zone":{
+    "prefix":"arm-dns-zone",
+    "body":[
+        "{",
+        "    \"type\": \"Microsoft.Network/dnszones\",",
+        "    \"name\": \"${1:dnsZoneName}\",",
+        "    \"apiVersion\": \"2017-09-01\",",
+        "    \"location\": \"global\",",
+        "    \"properties\": { }",
+        "  }"
+    ],
+    "description": "DNS Zone"
+},
+
+
+"DNS Record":{
+    "prefix":"arm-dns-record",
+    "body":[
+        "{",
+        "    \"type\": \"Microsoft.Network/dnszones/${1|A,AAAA,CNAME,MX,NS,PTR,SOA,SRV,TXT|},\",",
+        "    \"name\": \"[concat(${2:dnsZoneName}, '/', ${3:newRecordName}))]\",",
+        "    \"apiVersion\": \"2017-09-01\",",
+        "    \"location\": \"global\",",
+        "    \"dependsOn\": [",
+        "      \"${4:dnsZoneName}\"",
+        "    ],",
+        "    \"properties\": {",
+        "      \"TTL\": 3600,",
+        "      \"${5|Arecords,AAAARecords,MXRecords,NSRecords,PTRRecords,SRVRecords,TXTRecords,CNAMERecord,SOARecord|}\": [",
+        "      ]",
+        "    }",
+        " }"
+    ],
+    "description": "DNS Record"
+},
+
+"Azure Container Instance":{
+    "prefix":"arm-container-instance",
+    "body":[
+        "{",
+            "    \"name\": \"${1:containerGroupName}\",",
+            "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
+            "    \"apiVersion\": \"2017-10-01-preview\",",
+            "    \"location\": \"[resourceGroup().location]\",",
+            "    \"properties\": {",
+            "        \"containers\": [",
+            "            {",
+            "                \"name\": \"${2:containerName}\",",
+            "                \"properties\": {",
+            "                    \"image\": \"${3:containerImage}\",",
+            "                    \"ports\": [",
+            "                        {",
+            "                            \"port\": \"${4:containerPort}\" ",
+            "                        }",
+            "                    ],",
+            "                    \"resources\": {",
+            "                        \"requests\": {",
+            "                            \"cpu\": \"${5:containerCPUCount}\",",
+            "                            \"memoryInGb\": \"${6:containerMemoryInGb}\"",
+            "                        }",
+            "                    }",
+            "                }",
+            "            }",
+            "        ],",
+            "        \"osType\": \"${7|Linux,Windows|}\",",
+            "        \"ipAddress\": {",
+            "            \"type\": \"Public\",",
+            "            \"ports\": [",
+            "                {",
+            "                    \"protocol\": \"tcp\",",
+            "                    \"port\": \"${8:containerPublicPort}\"",
+            "                }",
+            "            ]",
+            "         }",
+            "    }",
+            "}"
+    ],
+    "description": "Azure Container Instance"
 }
