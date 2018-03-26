@@ -58,7 +58,7 @@
     "prefix": "arm-plan",
     "body": [
         "{",
-        "    \"apiVersion\": \"2014-06-01\",",
+        "    \"apiVersion\": \"2016-09-01\",",
         "    \"name\": \"${AppServicePlan1}\",",
         "    \"type\": \"Microsoft.Web/serverfarms\",",
         "    \"location\": \"[resourceGroup().location]\",",
