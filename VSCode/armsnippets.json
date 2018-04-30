@@ -45,6 +45,16 @@
     ],
     "description": "ARM Parameter"
 },
+"Output": {
+    "prefix": "arm-output",
+    "body": [
+        "\"${1:outputName}\": {",
+        "   \"type\": \"${2:outputType}\",",
+        "   \"value\": \"${3:outputValue}\"",
+        "}"
+    ],
+    "description": "Template output"
+},
 "Deployment Parameter Value": {
     "prefix": "arm-paramvalue",
     "body": [
