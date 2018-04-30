@@ -53,7 +53,7 @@
         "   \"value\": \"${3:outputValue}\"",
         "}"
     ],
-    "description": "ARM Parameter"
+    "description": "Template output"
 },
 "Deployment Parameter Value": {
     "prefix": "arm-paramvalue",
