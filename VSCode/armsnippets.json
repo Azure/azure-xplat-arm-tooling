@@ -1250,4 +1250,243 @@
             "}"
     ],
     "description": "Azure Container Instance"
+},
+
+
+"Cosmos DB Database Account": {
+    "prefix": "arm-cosmos-account",
+    "body": [
+        "{",
+        "  \"name\": \"${1:account-name}\",",
+        "  \"type\": \"Microsoft.DocumentDB/databaseAccounts\",",
+        "  \"apiVersion\": \"2015-04-08\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "  \"kind\": \"${2|GlobalDocumentDB,MongoDB,Parse|}\",",
+        "  \"properties\": {",
+        "    \"consistencyPolicy\": {",
+        "      \"defaultConsistencyLevel\": \"${3|Eventual,Session,BoundedStaleness,Strong,ConsistentPrefix|}\",",
+        "      \"maxStalenessPrefix\": ${4:1},",
+        "      \"maxIntervalInSeconds\": ${5:5}",
+        "    },",
+        "    \"locations\": [",
+        "      {",
+        "        \"locationName\": \"${6:maxlocationName}\",",
+        "        \"failoverPriority\": ${7:0}",
+        "      }",
+        "    ],",
+        "    \"databaseAccountOfferType\": \"Standard\",",
+        "    \"ipRangeFilter\": \"${8:ipRangeFilter}\",",
+        "    \"enableAutomaticFailover\": ${9|true,false|},",
+        "    \"capabilities\": [",
+        "      {",
+        "        \"name\": \"${10|EnableTable,EnableGremlin|}\"",
+        "      }",
+        "    ]",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Cosmos DB Account"
+},
+
+
+
+"Azure Automation Account": {
+    "prefix": "arm-automation-account",
+    "body": [
+        "{",
+        "  \"name\": \"${1:account-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "  \"properties\": {",
+        "    \"sku\": {",
+        "      \"name\": \"${2|Free,Basic|}\",",
+        "      \"family\": ${3:null},",
+        "      \"capacity\": ${4:null}",
+        "    }",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Account"
+},
+
+
+"Azure Automation Credential": {
+    "prefix": "arm-automation-credential",
+    "body": [
+        "{",
+        "  \"name\": \"${1:credential-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/credentials\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"userName\": \"${3:userName}\",",
+        "    \"password\": \"${4:password}\",",
+        "    \"description\": \"${5:description}\"",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Credential"
+},
+
+
+"Azure Automation Certificate": {
+    "prefix": "arm-automation-certificate",
+    "body": [
+        "{",
+        "  \"name\": \"${1:certificate-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/certificates\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"base64Value\": \"${3:base64Value}\",",
+        "    \"description\": \"${4:description}\",",
+        "    \"thumbprint\": \"${5:thumbprint}\",",
+        "    \"isExportable\": ${6|true,false|}",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Certificate"
+},
+
+"Azure Automation Variable": {
+    "prefix": "arm-automation-variable",
+    "body": [
+        "{",
+        "  \"name\": \"${1:variable-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/variables\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"value\": \"${3:value}\",",
+        "    \"description\": \"${4:description}\",",
+        "    \"isEncryptede\": ${5|true,false|}",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Variable"
+},
+
+"Azure Automation Runbook": {
+    "prefix": "arm-automation-runbook",
+    "body": [
+        "{",
+        "  \"name\": \"${1:runbook-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/runbooks\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"logVerbose\": ${3|true,false|},",
+        "    \"logProgress\": ${4|true,false|},",
+        "    \"runbookType\": \"${5|Script,Graph,PowerShellWorkflow,PowerShell,GraphPowerShellWorkflow,GraphPowerShell|}\",",
+        "    \"publishContentLink\": {",
+        "      \"uri\": \"${6:uri}\",",
+        "      \"version\": \"${7:version}\"",
+        "    },",
+        "    \"description\": \"${8:description}\"",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Runbook"
+},
+
+"Azure Automation Schedule": {
+    "prefix": "arm-automation-schedule",
+    "body": [
+        "    {",
+        "      \"name\": \"${1:schedule-name}\",",
+        "      \"type\": \"Microsoft.Automation/automationAccounts/schedules\",",
+        "      \"apiVersion\": \"2015-10-31\",",
+        "      \"tags\": {},"
+        "      \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "      ],",
+        "      \"properties\": {",
+        "        \"description\": \"${3:description}\",",
+        "        \"expiryTime\": \"9999-12-31T17:59:00-06:00\",",
+        "        \"isEnabled\": ${4|true,false|},",
+        "        \"interval\": null,",
+        "        \"frequency\": \"${5|OneTime,Day,Hour,Week,Month|}\"",
+        "      }",
+        "    }",
+    ],
+    "description": "Azure Automation Schedule"
+},
+
+"Azure Automation Job Schedule": {
+    "prefix": "arm-automation-jobSchedule",
+    "body": [
+        "    {",
+        "      \"name\": \"${1:jobSchedule-name}\",",
+        "      \"type\": \"Microsoft.Automation/automationAccounts/jobSchedules\",",
+        "      \"apiVersion\": \"2015-10-31\",",
+        "      \"location\": \"[resourceGroup().location]\",",
+        "      \"tags\": {},",
+        "      \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "      ],",
+        "      \"properties\": {",
+        "        \"schedule\": {",
+        "          \"name\": \"${3:schedule-name}\"",
+        "        },",
+        "        \"runbook\": {",
+        "          \"name\": \"${4:runbook-name}\"",
+        "        }",
+        "      }",
+        "    }"
+    ],
+    "description": "Azure Automation Job Schedule"
+},
+
+
+"Azure Kubernetes Service": {
+    "prefix": "arm-aks-cluster",
+    "body": [
+        "    {",
+        "      \"apiVersion\": \"2017-08-31\",",
+        "      \"type\": \"Microsoft.ContainerService/managedClusters\",",
+        "      \"location\": \"[resourceGroup().location]\",",
+        "      \"name\": \"${1:aks-cluster-name}\",",
+        "      \"properties\": {",
+        "        \"kubernetesVersion\": \"${2:1.9}\",",
+        "        \"dnsPrefix\": \"$32:dnsPrefix}\",",
+        "        \"agentPoolProfiles\": [",
+        "          {",
+        "            \"name\": \"agentpool\",",
+        "            \"count\": ${4:2},",
+        "            \"vmSize\": \"${5:virtualMachineSize}\",",
+        "            \"osType\": \"Linux\",",
+        "            \"storageProfile\": \"${6|ManagedDisks,StorageAccount|}\"",
+        "          }",
+        "        ],",
+        "        \"linuxProfile\": {",
+        "          \"adminUsername\": \"${7:adminUserName}\",",
+        "          \"ssh\": {",
+        "            \"publicKeys\": [",
+        "              {",
+        "                \"keyData\": \"${8:keyData}\"",
+        "              }",
+        "            ]",
+        "          }",
+        "        },",
+        "        \"servicePrincipalProfile\": {",
+        "          \"ClientId\": \"${9:servicePrincipalAppId}\",",
+        "          \"Secret\": \"${10:servicePrincipalAppPassword}\"",
+        "        }",
+        "      }",
+        "   }"
+    ],
+    "description": "Azure Kubernetes Service Cluster"
 }
