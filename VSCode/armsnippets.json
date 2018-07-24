@@ -15,6 +15,17 @@
     ],
     "description": "Skeleton ARM Template"
 },
+"Azure Resource Manager (ARM) Parameters Template": {
+    "prefix": "armp!",
+    "body": [
+        "{",
+        "    \"$$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#\",",
+        "    \"contentVersion\": \"1.0.0.0\",",
+        "    \"parameters\": {}",
+        "}"
+    ],
+    "description": "Skeleton ARM Parameters Template"
+},
 "Variable": {
     "prefix": "arm-variable",
     "body": [
@@ -34,11 +45,30 @@
     ],
     "description": "ARM Parameter"
 },
+"Output": {
+    "prefix": "arm-output",
+    "body": [
+        "\"${1:outputName}\": {",
+        "   \"type\": \"${2:outputType}\",",
+        "   \"value\": \"${3:outputValue}\"",
+        "}"
+    ],
+    "description": "Template output"
+},
+"Deployment Parameter Value": {
+    "prefix": "arm-paramvalue",
+    "body": [
+        "\"${1:parameterName}\": {",
+        "    \"value\": \"${2:parameterValue}\"",
+        "}"
+    ],
+    "description": "ARM Parameter value used in a azuredeploy.parameters.json file"
+},
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
     "body": [
         "{",
-        "    \"apiVersion\": \"2014-06-01\",",
+        "    \"apiVersion\": \"2016-09-01\",",
         "    \"name\": \"${AppServicePlan1}\",",
         "    \"type\": \"Microsoft.Web/serverfarms\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -486,6 +516,41 @@
     ],
     "description": "Network Interface"
 },
+"Network Security Group": {
+    "prefix": "arm-nsg",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2017-06-01\",",
+        "    \"type\": \"Microsoft.Network/networkSecurityGroups\",",
+        "    \"name\": \"${1:networkSecurityGroupName}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"properties\": {",
+        "        \"securityRules\": []",
+        "    }",
+        "}"
+    ],
+    "description": "Network Security Group"
+},
+"Network Security Group Rule": {
+    "prefix": "arm-nsgrule",
+    "body": [
+        "{",
+        "    \"name\": \"${1:networkSecurityGroupRuleName}\",",
+        "    \"properties\": {",
+        "        \"description\": \"${2:nsgRuleDescription}\",",
+        "        \"protocol\": \"${3:nsgRuleProtocol}\",",
+        "        \"sourcePortRange\": \"${4:nsgRuleSourcePortRange}\",",
+        "        \"destinationPortRange\": \"${5:nsgRuleDestinationPortRange}\",",
+        "        \"sourceAddressPrefix\": \"${6:nsgRuleSourceAddressPrefix}\",",
+        "        \"destinationAddressPrefix\": \"${7:nsgRileDestinationAddressRange}\",",
+        "        \"access\": \"${8:nsgRuleAccess}\",",
+        "        \"priority\": ${9:nsgRulePriority},",
+        "        \"direction\": \"${10:nsgRuleDirection}\"",
+        "    }",
+        "}"
+    ],
+    "description": "Network Security Group Rule"
+},
 "PowerShell DSC Extension": {
     "prefix": "arm-dsc",
     "body": [
@@ -737,7 +802,7 @@
         "                \"properties\": {",
         "                    \"privateIPAllocationMethod\": \"Dynamic\",",
         "                    \"publicIPAddress\": {",
-        "                        \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses', '${UbuntuVM1}-VirtualNetwork')]\"",
+        "                        \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses', '${UbuntuVM1}-PublicIP')]\"",
         "                    },",
         "                    \"subnet\": {",
         "                        \"id\": \"[concat(resourceId('Microsoft.Network/virtualNetworks', '${UbuntuVM1}-VirtualNetwork'), '/subnets/${UbuntuVM1}-VirtualNetwork-Subnet')]\"",
@@ -748,7 +813,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2017-03-30\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
         "    \"name\": \"${UbuntuVM1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -772,14 +837,11 @@
         "            \"imageReference\": {",
         "                \"publisher\": \"Canonical\",",
         "                \"offer\": \"UbuntuServer\",",
-        "                \"sku\": \"15.04\",",
+        "                \"sku\": \"16.04-LTS\",",
         "                \"version\": \"latest\"",
         "            },",
         "            \"osDisk\": {",
         "                \"name\": \"${UbuntuVM1}-OSDisk\",",
-        "                \"vhd\": {",
-        "                    \"uri\": \"[concat('http://', toLower('${UbuntuVM1}storage'), '.blob.core.windows.net/vhds/${UbuntuVM1}-OSDisk.vhd\"",
-        "                },",
         "                \"caching\": \"ReadWrite\",",
         "                \"createOption\": \"FromImage\"",
         "            }",
@@ -902,7 +964,7 @@
         "        \"typeHandlerVersion\": \"1.5\",",
         "        \"autoUpgradeMinorVersion\": true,",
         "        \"settings\": {",
-        "            \"xmlCfg\": \"[base64('<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\\\"4096\\\" xmlns=\\\"http: //schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\\\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\\\"Error\\\"/> <Logs scheduledTransferPeriod=\\\"PT1M\\\" scheduledTransferLogLevelFilter=\\\"Error\\\" /> <Directories scheduledTransferPeriod=\\\"PT1M\\\"> <IISLogs containerName =\\\"wad-iis-logfiles\\\" /> <FailedRequestLogs containerName =\\\"wad-failedrequestlogs\\\" /> </Directories> <WindowsEventLog scheduledTransferPeriod=\\\"PT1M\\\" > <DataSource name=\\\"Application!*\\\" /> </WindowsEventLog> <CrashDumps containerName=\\\"wad-crashdumps\\\" dumpType=\\\"Mini\\\"> <CrashDumpConfiguration processName=\\\"WaIISHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"WaWorkerHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"w3wp.exe\\\"/> </CrashDumps> <PerformanceCounters scheduledTransferPeriod=\\\"PT1M\\\"> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Memory\\\\\\\\Available MBytes\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\ISAPI Extension Requests/sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\Bytes Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Requests/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Errors Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Queued\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Rejected\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Processor(_Total)\\\\\\\\% Processor Time\\\" sampleRate=\\\"PT3M\\\" /> </PerformanceCounters> </DiagnosticMonitorConfiguration> </WadCfg>')]\",",
+        "            \"xmlCfg\": \"[base64('<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\\\"4096\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\\\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\\\"Error\\\"/> <Logs scheduledTransferPeriod=\\\"PT1M\\\" scheduledTransferLogLevelFilter=\\\"Error\\\" /> <Directories scheduledTransferPeriod=\\\"PT1M\\\"> <IISLogs containerName =\\\"wad-iis-logfiles\\\" /> <FailedRequestLogs containerName =\\\"wad-failedrequestlogs\\\" /> </Directories> <WindowsEventLog scheduledTransferPeriod=\\\"PT1M\\\" > <DataSource name=\\\"Application!*\\\" /> </WindowsEventLog> <CrashDumps containerName=\\\"wad-crashdumps\\\" dumpType=\\\"Mini\\\"> <CrashDumpConfiguration processName=\\\"WaIISHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"WaWorkerHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"w3wp.exe\\\"/> </CrashDumps> <PerformanceCounters scheduledTransferPeriod=\\\"PT1M\\\"> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Memory\\\\\\\\Available MBytes\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\ISAPI Extension Requests/sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\Bytes Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Requests/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Errors Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Queued\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Rejected\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Processor(_Total)\\\\\\\\% Processor Time\\\" sampleRate=\\\"PT3M\\\" /> </PerformanceCounters> </DiagnosticMonitorConfiguration> </WadCfg>')]\",",
         "            \"storageAccount\": \"${DIAGNOSTICS_STORAGE_ACCOUNT}\"",
         "        },",
         "        \"protectedSettings\": {",
@@ -999,7 +1061,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2017-03-30\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
         "    \"name\": \"${WindowsVM1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1028,9 +1090,6 @@
         "            },",
         "            \"osDisk\": {",
         "                \"name\": \"${WindowsVM1}OSDisk\",",
-        "                \"vhd\": {",
-        "                    \"uri\": \"[concat('http://', toLower('${WindowsVM1}storage'), '.blob.core.windows.net/vhds/${WindowsVM1}-OSDisk.vhd')]\"",
-        "                },",
         "                \"caching\": \"ReadWrite\",",
         "                \"createOption\": \"FromImage\"",
         "            }",
@@ -1112,4 +1171,322 @@
         "}"
     ],
     "description": "OMS management solution"
+},
+"DNS Zone":{
+    "prefix":"arm-dns-zone",
+    "body":[
+        "{",
+        "    \"type\": \"Microsoft.Network/dnszones\",",
+        "    \"name\": \"${1:dnsZoneName}\",",
+        "    \"apiVersion\": \"2017-09-01\",",
+        "    \"location\": \"global\",",
+        "    \"properties\": { }",
+        "  }"
+    ],
+    "description": "DNS Zone"
+},
+
+
+"DNS Record":{
+    "prefix":"arm-dns-record",
+    "body":[
+        "{",
+        "    \"type\": \"Microsoft.Network/dnszones/${1|A,AAAA,CNAME,MX,NS,PTR,SOA,SRV,TXT|},\",",
+        "    \"name\": \"[concat(${2:dnsZoneName}, '/', ${3:newRecordName}))]\",",
+        "    \"apiVersion\": \"2017-09-01\",",
+        "    \"location\": \"global\",",
+        "    \"dependsOn\": [",
+        "      \"${4:dnsZoneName}\"",
+        "    ],",
+        "    \"properties\": {",
+        "      \"TTL\": 3600,",
+        "      \"${5|Arecords,AAAARecords,MXRecords,NSRecords,PTRRecords,SRVRecords,TXTRecords,CNAMERecord,SOARecord|}\": [",
+        "      ]",
+        "    }",
+        " }"
+    ],
+    "description": "DNS Record"
+},
+
+"Azure Container Instance":{
+    "prefix":"arm-container-instance",
+    "body":[
+        "{",
+            "    \"name\": \"${1:containerGroupName}\",",
+            "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
+            "    \"apiVersion\": \"2017-10-01-preview\",",
+            "    \"location\": \"[resourceGroup().location]\",",
+            "    \"properties\": {",
+            "        \"containers\": [",
+            "            {",
+            "                \"name\": \"${2:containerName}\",",
+            "                \"properties\": {",
+            "                    \"image\": \"${3:containerImage}\",",
+            "                    \"ports\": [",
+            "                        {",
+            "                            \"port\": \"${4:containerPort}\" ",
+            "                        }",
+            "                    ],",
+            "                    \"resources\": {",
+            "                        \"requests\": {",
+            "                            \"cpu\": \"${5:containerCPUCount}\",",
+            "                            \"memoryInGb\": \"${6:containerMemoryInGb}\"",
+            "                        }",
+            "                    }",
+            "                }",
+            "            }",
+            "        ],",
+            "        \"osType\": \"${7|Linux,Windows|}\",",
+            "        \"ipAddress\": {",
+            "            \"type\": \"Public\",",
+            "            \"ports\": [",
+            "                {",
+            "                    \"protocol\": \"tcp\",",
+            "                    \"port\": \"${8:containerPublicPort}\"",
+            "                }",
+            "            ]",
+            "         }",
+            "    }",
+            "}"
+    ],
+    "description": "Azure Container Instance"
+},
+
+
+"Cosmos DB Database Account": {
+    "prefix": "arm-cosmos-account",
+    "body": [
+        "{",
+        "  \"name\": \"${1:account-name}\",",
+        "  \"type\": \"Microsoft.DocumentDB/databaseAccounts\",",
+        "  \"apiVersion\": \"2015-04-08\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "  \"kind\": \"${2|GlobalDocumentDB,MongoDB,Parse|}\",",
+        "  \"properties\": {",
+        "    \"consistencyPolicy\": {",
+        "      \"defaultConsistencyLevel\": \"${3|Eventual,Session,BoundedStaleness,Strong,ConsistentPrefix|}\",",
+        "      \"maxStalenessPrefix\": ${4:1},",
+        "      \"maxIntervalInSeconds\": ${5:5}",
+        "    },",
+        "    \"locations\": [",
+        "      {",
+        "        \"locationName\": \"${6:maxlocationName}\",",
+        "        \"failoverPriority\": ${7:0}",
+        "      }",
+        "    ],",
+        "    \"databaseAccountOfferType\": \"Standard\",",
+        "    \"ipRangeFilter\": \"${8:ipRangeFilter}\",",
+        "    \"enableAutomaticFailover\": ${9|true,false|},",
+        "    \"capabilities\": [",
+        "      {",
+        "        \"name\": \"${10|EnableTable,EnableGremlin|}\"",
+        "      }",
+        "    ]",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Cosmos DB Account"
+},
+
+
+
+"Azure Automation Account": {
+    "prefix": "arm-automation-account",
+    "body": [
+        "{",
+        "  \"name\": \"${1:account-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "  \"properties\": {",
+        "    \"sku\": {",
+        "      \"name\": \"${2|Free,Basic|}\",",
+        "      \"family\": ${3:null},",
+        "      \"capacity\": ${4:null}",
+        "    }",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Account"
+},
+
+
+"Azure Automation Credential": {
+    "prefix": "arm-automation-credential",
+    "body": [
+        "{",
+        "  \"name\": \"${1:credential-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/credentials\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"userName\": \"${3:userName}\",",
+        "    \"password\": \"${4:password}\",",
+        "    \"description\": \"${5:description}\"",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Credential"
+},
+
+
+"Azure Automation Certificate": {
+    "prefix": "arm-automation-certificate",
+    "body": [
+        "{",
+        "  \"name\": \"${1:certificate-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/certificates\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"base64Value\": \"${3:base64Value}\",",
+        "    \"description\": \"${4:description}\",",
+        "    \"thumbprint\": \"${5:thumbprint}\",",
+        "    \"isExportable\": ${6|true,false|}",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Certificate"
+},
+
+"Azure Automation Variable": {
+    "prefix": "arm-automation-variable",
+    "body": [
+        "{",
+        "  \"name\": \"${1:variable-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/variables\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"value\": \"${3:value}\",",
+        "    \"description\": \"${4:description}\",",
+        "    \"isEncryptede\": ${5|true,false|}",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Variable"
+},
+
+"Azure Automation Runbook": {
+    "prefix": "arm-automation-runbook",
+    "body": [
+        "{",
+        "  \"name\": \"${1:runbook-name}\",",
+        "  \"type\": \"Microsoft.Automation/automationAccounts/runbooks\",",
+        "  \"apiVersion\": \"2015-10-31\",",
+        "  \"location\": \"[resourceGroup().location]\",",
+        "  \"tags\": {},",
+        "    \"dependsOn\": [",
+        "      \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "  \"properties\": {",
+        "    \"logVerbose\": ${3|true,false|},",
+        "    \"logProgress\": ${4|true,false|},",
+        "    \"runbookType\": \"${5|Script,Graph,PowerShellWorkflow,PowerShell,GraphPowerShellWorkflow,GraphPowerShell|}\",",
+        "    \"publishContentLink\": {",
+        "      \"uri\": \"${6:uri}\",",
+        "      \"version\": \"${7:version}\"",
+        "    },",
+        "    \"description\": \"${8:description}\"",
+        "  }",
+        "}",
+    ],
+    "description": "Azure Automation Runbook"
+},
+
+"Azure Automation Schedule": {
+    "prefix": "arm-automation-schedule",
+    "body": [
+        "    {",
+        "      \"name\": \"${1:schedule-name}\",",
+        "      \"type\": \"Microsoft.Automation/automationAccounts/schedules\",",
+        "      \"apiVersion\": \"2015-10-31\",",
+        "      \"tags\": {},"
+        "      \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "      ],",
+        "      \"properties\": {",
+        "        \"description\": \"${3:description}\",",
+        "        \"expiryTime\": \"9999-12-31T17:59:00-06:00\",",
+        "        \"isEnabled\": ${4|true,false|},",
+        "        \"interval\": null,",
+        "        \"frequency\": \"${5|OneTime,Day,Hour,Week,Month|}\"",
+        "      }",
+        "    }",
+    ],
+    "description": "Azure Automation Schedule"
+},
+
+"Azure Automation Job Schedule": {
+    "prefix": "arm-automation-jobSchedule",
+    "body": [
+        "    {",
+        "      \"name\": \"${1:jobSchedule-name}\",",
+        "      \"type\": \"Microsoft.Automation/automationAccounts/jobSchedules\",",
+        "      \"apiVersion\": \"2015-10-31\",",
+        "      \"location\": \"[resourceGroup().location]\",",
+        "      \"tags\": {},",
+        "      \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "      ],",
+        "      \"properties\": {",
+        "        \"schedule\": {",
+        "          \"name\": \"${3:schedule-name}\"",
+        "        },",
+        "        \"runbook\": {",
+        "          \"name\": \"${4:runbook-name}\"",
+        "        }",
+        "      }",
+        "    }"
+    ],
+    "description": "Azure Automation Job Schedule"
+},
+
+
+"Azure Kubernetes Service": {
+    "prefix": "arm-aks-cluster",
+    "body": [
+        "    {",
+        "      \"apiVersion\": \"2017-08-31\",",
+        "      \"type\": \"Microsoft.ContainerService/managedClusters\",",
+        "      \"location\": \"[resourceGroup().location]\",",
+        "      \"name\": \"${1:aks-cluster-name}\",",
+        "      \"properties\": {",
+        "        \"kubernetesVersion\": \"${2:1.9}\",",
+        "        \"dnsPrefix\": \"$32:dnsPrefix}\",",
+        "        \"agentPoolProfiles\": [",
+        "          {",
+        "            \"name\": \"agentpool\",",
+        "            \"count\": ${4:2},",
+        "            \"vmSize\": \"${5:virtualMachineSize}\",",
+        "            \"osType\": \"Linux\",",
+        "            \"storageProfile\": \"${6|ManagedDisks,StorageAccount|}\"",
+        "          }",
+        "        ],",
+        "        \"linuxProfile\": {",
+        "          \"adminUsername\": \"${7:adminUserName}\",",
+        "          \"ssh\": {",
+        "            \"publicKeys\": [",
+        "              {",
+        "                \"keyData\": \"${8:keyData}\"",
+        "              }",
+        "            ]",
+        "          }",
+        "        },",
+        "        \"servicePrincipalProfile\": {",
+        "          \"ClientId\": \"${9:servicePrincipalAppId}\",",
+        "          \"Secret\": \"${10:servicePrincipalAppPassword}\"",
+        "        }",
+        "      }",
+        "   }"
+    ],
+    "description": "Azure Kubernetes Service Cluster"
 }
