@@ -26,13 +26,6 @@
     ],
     "description": "Skeleton ARM Parameters Template"
 },
-"Variable": {
-    "prefix": "arm-variable",
-    "body": [
-        "\"${1:variableName}\": \"${2:variableValue}\""
-    ],
-    "description": "ARM Variable"
-},
 "Parameter": {
     "prefix": "arm-parameter",
     "body": [
