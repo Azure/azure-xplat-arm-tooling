@@ -26,6 +26,13 @@
     ],
     "description": "Skeleton ARM Parameters Template"
 },
+"Variable": {
+    "prefix": "arm-variable",
+    "body": [
+        "\"${1:variableName}\": \"${2:variableValue}\""
+    ],
+    "description": "ARM Variable"
+},
 "Parameter": {
     "prefix": "arm-parameter",
     "body": [
@@ -1488,7 +1495,7 @@
     "body": [
       "{",
       "  \"type\": \"Microsoft.Logic/workflows\",",
-      "  \"name\": \"${1:logic-app-name}\",",
+      "  \"name\": \"${1:logicapp-name}\",",
       "  \"apiVersion\": \"2017-07-01\",",
       "  \"location\": \"[resourceGroup().location]\",",
       "  \"tags\": {},",
@@ -1528,6 +1535,6 @@
       "    }",
       "  }",
       "}"
-  ],
-		"description": "Azure Logic App Connector"
-	}
+    ],
+	"description": "Azure Logic App Connector"
+}
