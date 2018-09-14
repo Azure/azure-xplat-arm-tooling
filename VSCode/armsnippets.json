@@ -1409,7 +1409,7 @@
         "      \"name\": \"${1:schedule-name}\",",
         "      \"type\": \"Microsoft.Automation/automationAccounts/schedules\",",
         "      \"apiVersion\": \"2015-10-31\",",
-        "      \"tags\": {},"
+        "      \"tags\": {},",
         "      \"dependsOn\": [",
         "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
         "      ],",
