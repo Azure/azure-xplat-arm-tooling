@@ -1490,3 +1490,20 @@
     ],
     "description": "Azure Kubernetes Service Cluster"
 }
+
+
+"Azure Resource Group": {
+    "prefix": "arm-rg",
+    "body": [
+        "    {",
+        "      \"name\": \"${1:resourceGroup-name}\",",
+        "      \"type\": \"Microsoft.Resources/resourceGroups\",",
+        "      \"apiVersion\": \"2018-05-01\",",
+        "      \"location\": \"${2:resourceGroup-location}\",",
+        "      \"tags\": {},",
+        "      \"properties\": {",
+        "      }",
+        "    }",
+    ],
+    "description": "Azure Resource Group"
+},
