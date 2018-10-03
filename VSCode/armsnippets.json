@@ -1489,9 +1489,7 @@
         "   }"
     ],
     "description": "Azure Kubernetes Service Cluster"
-}
-
-
+},
 "Azure Resource Group": {
     "prefix": "arm-rg",
     "body": [
