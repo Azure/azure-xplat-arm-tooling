@@ -384,9 +384,9 @@
     ],
     "description": "Custom Script for Windows Extension"
 },
-"Keyvault":{
-    "prefix":"arm-keyvault",
-    "body":[
+"Keyvault": {
+    "prefix": "arm-keyvault",
+    "body": [
         "{",
         "   \"type\": \"Microsoft.KeyVault/vaults\",",
         "   \"apiVersion\": \"2015-06-01\",",
@@ -416,7 +416,7 @@
         "        }",
         "    },",
         "    \"resources\": [",
-        "      {", 
+        "      {",
         "        \"type\": \"secrets\",",
         "        \"name\": \"${KeyvaultSecret1}\",",
         "        \"apiVersion\": \"2015-06-01\",",
@@ -431,8 +431,8 @@
     ],
     "description": "Keyvault with Secret"
 },
-"Keyvault Secret":{
-    "prefix":"arm-keyvault-secret",
+"Keyvault Secret": {
+    "prefix": "arm-keyvault-secret",
     "body": [
         "{",
         "    \"apiVersion\": \"2015-06-01\",",
@@ -1172,9 +1172,9 @@
     ],
     "description": "OMS management solution"
 },
-"DNS Zone":{
-    "prefix":"arm-dns-zone",
-    "body":[
+"DNS Zone": {
+    "prefix": "arm-dns-zone",
+    "body": [
         "{",
         "    \"type\": \"Microsoft.Network/dnszones\",",
         "    \"name\": \"${1:dnsZoneName}\",",
@@ -1185,11 +1185,9 @@
     ],
     "description": "DNS Zone"
 },
-
-
-"DNS Record":{
-    "prefix":"arm-dns-record",
-    "body":[
+"DNS Record": {
+    "prefix": "arm-dns-record",
+    "body": [
         "{",
         "    \"type\": \"Microsoft.Network/dnszones/${1|A,AAAA,CNAME,MX,NS,PTR,SOA,SRV,TXT|},\",",
         "    \"name\": \"[concat(${2:dnsZoneName}, '/', ${3:newRecordName}))]\",",
@@ -1207,52 +1205,49 @@
     ],
     "description": "DNS Record"
 },
-
-"Azure Container Instance":{
-    "prefix":"arm-container-instance",
-    "body":[
+"Azure Container Instance": {
+    "prefix": "arm-container-instance",
+    "body": [
         "{",
-            "    \"name\": \"${1:containerGroupName}\",",
-            "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
-            "    \"apiVersion\": \"2017-10-01-preview\",",
-            "    \"location\": \"[resourceGroup().location]\",",
-            "    \"properties\": {",
-            "        \"containers\": [",
-            "            {",
-            "                \"name\": \"${2:containerName}\",",
-            "                \"properties\": {",
-            "                    \"image\": \"${3:containerImage}\",",
-            "                    \"ports\": [",
-            "                        {",
-            "                            \"port\": \"${4:containerPort}\" ",
-            "                        }",
-            "                    ],",
-            "                    \"resources\": {",
-            "                        \"requests\": {",
-            "                            \"cpu\": \"${5:containerCPUCount}\",",
-            "                            \"memoryInGb\": \"${6:containerMemoryInGb}\"",
-            "                        }",
-            "                    }",
-            "                }",
-            "            }",
-            "        ],",
-            "        \"osType\": \"${7|Linux,Windows|}\",",
-            "        \"ipAddress\": {",
-            "            \"type\": \"Public\",",
-            "            \"ports\": [",
-            "                {",
-            "                    \"protocol\": \"tcp\",",
-            "                    \"port\": \"${8:containerPublicPort}\"",
-            "                }",
-            "            ]",
-            "         }",
-            "    }",
-            "}"
+        "    \"name\": \"${1:containerGroupName}\",",
+        "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
+        "    \"apiVersion\": \"2017-10-01-preview\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"properties\": {",
+        "        \"containers\": [",
+        "            {",
+        "                \"name\": \"${2:containerName}\",",
+        "                \"properties\": {",
+        "                    \"image\": \"${3:containerImage}\",",
+        "                    \"ports\": [",
+        "                        {",
+        "                            \"port\": \"${4:containerPort}\" ",
+        "                        }",
+        "                    ],",
+        "                    \"resources\": {",
+        "                        \"requests\": {",
+        "                            \"cpu\": \"${5:containerCPUCount}\",",
+        "                            \"memoryInGb\": \"${6:containerMemoryInGb}\"",
+        "                        }",
+        "                    }",
+        "                }",
+        "            }",
+        "        ],",
+        "        \"osType\": \"${7|Linux,Windows|}\",",
+        "        \"ipAddress\": {",
+        "            \"type\": \"Public\",",
+        "            \"ports\": [",
+        "                {",
+        "                    \"protocol\": \"tcp\",",
+        "                    \"port\": \"${8:containerPublicPort}\"",
+        "                }",
+        "            ]",
+        "         }",
+        "    }",
+        "}"
     ],
     "description": "Azure Container Instance"
 },
-
-
 "Cosmos DB Database Account": {
     "prefix": "arm-cosmos-account",
     "body": [
@@ -1288,9 +1283,6 @@
     ],
     "description": "Azure Cosmos DB Account"
 },
-
-
-
 "Azure Automation Account": {
     "prefix": "arm-automation-account",
     "body": [
@@ -1311,8 +1303,6 @@
     ],
     "description": "Azure Automation Account"
 },
-
-
 "Azure Automation Credential": {
     "prefix": "arm-automation-credential",
     "body": [
@@ -1332,8 +1322,6 @@
     ],
     "description": "Azure Automation Credential"
 },
-
-
 "Azure Automation Certificate": {
     "prefix": "arm-automation-certificate",
     "body": [
@@ -1354,7 +1342,6 @@
     ],
     "description": "Azure Automation Certificate"
 },
-
 "Azure Automation Variable": {
     "prefix": "arm-automation-variable",
     "body": [
@@ -1374,7 +1361,6 @@
     ],
     "description": "Azure Automation Variable"
 },
-
 "Azure Automation Runbook": {
     "prefix": "arm-automation-runbook",
     "body": [
@@ -1401,7 +1387,6 @@
     ],
     "description": "Azure Automation Runbook"
 },
-
 "Azure Automation Schedule": {
     "prefix": "arm-automation-schedule",
     "body": [
@@ -1409,7 +1394,7 @@
         "      \"name\": \"${1:schedule-name}\",",
         "      \"type\": \"Microsoft.Automation/automationAccounts/schedules\",",
         "      \"apiVersion\": \"2015-10-31\",",
-        "      \"tags\": {},",
+        "      \"tags\": {},"
         "      \"dependsOn\": [",
         "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
         "      ],",
@@ -1424,7 +1409,6 @@
     ],
     "description": "Azure Automation Schedule"
 },
-
 "Azure Automation Job Schedule": {
     "prefix": "arm-automation-jobSchedule",
     "body": [
@@ -1449,8 +1433,6 @@
     ],
     "description": "Azure Automation Job Schedule"
 },
-
-
 "Azure Kubernetes Service": {
     "prefix": "arm-aks-cluster",
     "body": [
@@ -1488,5 +1470,253 @@
         "      }",
         "   }"
     ],
-    "description": "Azure Kubernetes Service Cluster"
-}
+    "description": "Azure Kubernetes Service Cluster",
+},
+"Azure Load Balancer External": {
+    "prefix": "arm-lb-external",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2015-05-01-preview\",",
+        "    \"name\": \"${1:loadBalancer-name}\",",
+        "    \"type\": \"Microsoft.Network/loadBalancers\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"dependsOn\": [",
+        "      \"[concat('Microsoft.Network/publicIPAddresses/', ${2:publicIP-name})]\"",
+        "    ],",
+        "    \"properties\": {",
+        "      \"frontendIPConfigurations\": [",
+        "        {",
+        "          \"name\": \"LoadBalancerFrontEnd\",",
+        "          \"properties\": {",
+        "            \"publicIPAddress\": {",
+        "              \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses',${2:publicIP-name})]\"",
+        "            }",
+        "          }",
+        "        }",
+        "      ],",
+        "      \"backendAddressPools\": [",
+        "        {",
+        "          \"name\": \"LoadBalancerBackEndPool1\"",
+        "        }",
+        "      ],",
+        "      \"inboundNatRules\": [",
+        "        {",
+        "          \"name\": \"${3:NATRule-name}\",",
+        "          \"properties\": {",
+        "            \"frontendIPConfiguration\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/frontendIPConfigurations/LoadBalancerFrontEnd')]\"",
+        "            },",
+        "            \"protocol\": \"tcp\",",
+        "            \"frontendPort\": ${5:50001},",
+        "            \"backendPort\":${5: 3389},",
+        "            \"enableFloatingIP\": false",
+        "          }",
+        "        }",
+        "      ],",
+        "      \"loadBalancingRules\": [",
+        "        {",
+        "          \"name\": \"LBRule1\",",
+        "          \"properties\": {",
+        "            \"frontendIPConfiguration\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/frontendIPConfigurations/LoadBalancerFrontEnd')]\"",
+        "            },",
+        "            \"backendAddressPool\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/backendAddressPools/LoadBalancerBackEndPool1')]\"",
+        "            },",
+        "            \"protocol\": \"tcp\",",
+        "            \"frontendPort\": ${6:80},",
+        "            \"backendPort\": ${7:80},",
+        "            \"enableFloatingIP\": false,",
+        "            \"idleTimeoutInMinutes\": 5,",
+        "            \"probe\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/probes/tcpProbe')]\"",
+        "            }",
+        "          }",
+        "        }",
+        "      ],",
+        "      \"probes\": [",
+        "        {",
+        "          \"name\": \"tcpProbe\",",
+        "          \"properties\": {",
+        "            \"protocol\": \"tcp\",",
+        "            \"port\": ${5:backend-port},",
+        "            \"intervalInSeconds\": 5,",
+        "            \"numberOfProbes\": 2",
+        "          }",
+        "        }",
+        "      ]",
+        "    }",
+        "  }",
+    ],
+    "description": "Azure External Load Balancer",
+},
+"Azure Load Balancer Internal": {
+    "prefix": "arm-lb-internal",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2015-05-01-preview\",",
+        "    \"name\": \"${1:loadBalancer-name}\",",
+        "    \"type\": \"Microsoft.Network/loadBalancers\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"dependsOn\": [",
+        "      \"${2:virtualNetwork-name}\"",
+        "    ],",
+        "    \"properties\": {",
+        "      \"frontendIPConfigurations\": [",
+        "        {",
+        "          \"name\": \"LoadBalancerFrontEnd\",",
+        "            \"subnet\": {",
+        "                \"id\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', '${2:virtualNetwork-name}', '${3:subnet-name}')]\"",
+        "            },",
+        "          \"properties\": {",
+        "             \"privateIPAddress\": \"${4:private-ip}\",",
+        "              \"privateIPAllocationMethod\": \"Static\"",
+        "          }",
+        ","
+            "        }",
+        "      ],",
+        "      \"backendAddressPools\": [",
+        "        {",
+        "          \"name\": \"LoadBalancerBackEndPool1\"",
+        "        }",
+        "      ],",
+        ,
+        "      \"loadBalancingRules\": [",
+        "        {",
+        "          \"name\": \"LBRule1\",",
+        "          \"properties\": {",
+        "            \"frontendIPConfiguration\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/frontendIPConfigurations/LoadBalancerFrontEnd')]\"",
+        "            },",
+        "            \"backendAddressPool\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/backendAddressPools/LoadBalancerBackEndPool1')]\"",
+        "            },",
+        "            \"protocol\": \"tcp\",",
+        "            \"frontendPort\": ${4:80},",
+        "            \"backendPort\": ${5:80},",
+        "            \"enableFloatingIP\": false,",
+        "            \"idleTimeoutInMinutes\": 5,",
+        "            \"probe\": {",
+        "              \"id\": \"[concat(resourceId('Microsoft.Network/loadBalancers',${1:loadBalancer-name}),'/probes/tcpProbe')]\"",
+        "            }",
+        "          }",
+        "        }",
+        "      ],",
+        "      \"probes\": [",
+        "        {",
+        "          \"name\": \"tcpProbe\",",
+        "          \"properties\": {",
+        "            \"protocol\": \"tcp\",",
+        "            \"port\": ${6:80},",
+        "            \"intervalInSeconds\": 5,",
+        "            \"numberOfProbes\": 2",
+        "          }",
+        "        }",
+        "      ]",
+        "    }",
+        "  }",
+    ],
+    "description": "Azure Load Balancer Internal",
+},
+"Azure IP Prefix": {
+    "prefix": "arm-ip-prefix",
+    "body": [
+        "        {",
+        "            \"name\": \"${1:IPPrefix-name}\",",
+        "            \"type\": \"Microsoft.Network/publicIPPrefixes\",",
+        "            \"apiVersion\": \"2018-08-01\",",
+        "            \"location\": \"[resourceGroup().location]\",",
+        "            \"tags\": {},",
+        "            \"sku\": {",
+        "              \"name\": \"Standard\"",
+        "            },",
+        "            \"properties\": {",
+        "              \"publicIPAddressVersion\": \"IPv4\",",
+        "              \"prefixLength\": ${2:28}",
+        "            }",
+        "          }",
+    ],
+    "description": "Azure IP Prefix",
+},
+"Azure Route Table": {
+    "prefix": "arm-route-table",
+    "body": [
+        "        {",
+        "            \"name\": \"${1:routeTable-name}\",",
+        "            \"type\": \"Microsoft.Network/routeTables\",",
+        "            \"apiVersion\": \"2018-08-01\",",
+        "            \"location\": \"[resourceGroup().location]\",",
+        "            \"tags\": {},",
+        "            \"properties\": {",
+        "              \"routes\": [",
+        "                {",
+        "                  \"name\": \"${2:route-name}\",",
+        "                  \"properties\": {",
+        "                    \"addressPrefix\": \"${3:address-prefix}\",",
+        "                    \"nextHopType\": \"${4|VirtualNetworkGateway,VnetLocal,Internet,VirtualAppliance,None|}\",",
+        "                    \"nextHopIpAddress\": \"${5:next-hop-ip}\"",
+        "                  },",
+        "                }",
+        "              ],",
+        "              \"disableBgpRoutePropagation\": ${6|true,false|}",
+        "            },",
+        "",
+        "          }",
+    ],
+    "description": "Azure Route Table",
+},
+"Azure Route Table Route": {
+    "prefix": "arm-route-table-route",
+    "body": [
+        "{",
+        "    \"name\": \"${1:route-name}\",",
+        "    \"type\": \"Microsoft.Network/routeTables/routes\",",
+        "    \"apiVersion\": \"2018-08-01\",",
+        "    \"properties\": {",
+        "       \"addressPrefix\": \"${2:address-prefix}\",",
+        "       \"nextHopType\": \"${3|VirtualNetworkGateway,VnetLocal,Internet,VirtualAppliance,None|}\",",
+        "       \"nextHopIpAddress\": \"${4:next-hop-ip}\"",
+        "    }",
+        "  }",
+    ],
+    "description": "Azure Route Table Route",
+},
+"Azure Trafic Manager Profile": {
+    "prefix": "arm-traffic-manager",
+    "body": [
+        "{",
+            "    \"name\": \"${1:traffic-manager-name}\",",
+            "    \"type\": \"Microsoft.Network/trafficmanagerprofiles\",",
+            "    \"apiVersion\": \"2017-05-01\",",
+            "    \"tags\": {},",
+            "    \"location\": \"[resourceGroup().location]\",",
+            "    \"properties\": {",
+            "      \"profileStatus\": \"Enabled\",",
+            "      \"trafficRoutingMethod\": \"${2|Performance,Priority,Weighted,Geographic|}\",",
+            "      \"dnsConfig\": {",
+            "        \"relativeName\": \"${3:dns-name}\",",
+            "        \"ttl\": 30",
+            "      },",
+            "      \"monitorConfig\": {",
+            "        \"protocol\": \"${4|HTTP,HTTPS,TCP|}\",",
+            "        \"port\": ${5:80},",
+            "        \"path\": \"${6:path}\",",
+            "        \"intervalInSeconds\": ${7:30},",
+            "        \"timeoutInSeconds\": ${8:5},",
+            "        \"toleratedNumberOfFailures\": ${9:3}",
+            "      },",
+            "      \"endpoints\": [",
+            "        {",
+            "          \"properties\": {",
+            "            \"targetResourceId\": \"${10:target-id}\",",
+            "            \"endpointStatus\": \"enabled\",",
+            "            \"weight\": ${11:100},",
+            "            \"priority\":${12:0}",
+            "          }",
+            "        }",
+            "      ]",
+            "    }",
+            "  }",
+    ],
+    "description": "Azure Traffic Manager Profile",
+},
