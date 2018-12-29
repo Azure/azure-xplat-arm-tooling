@@ -1,4 +1,4 @@
-/*
+	/*
 // Azure Resource Manager Template Snippets 
 */
 "Azure Resource Manager (ARM) Template": {
@@ -1735,7 +1735,95 @@
         "}"
     ],
     "description": "Windows Virtual Machine"
-}
+},
+
+"VPN Local Network Gateway": {
+    "prefix": "arm-vpn-local-gateway",
+    "body": [
+      "    {",
+      "      \"apiVersion\": \"2018-07-01\",",
+      "      \"type\": \"Microsoft.Network/localNetworkGateways\",",
+      "      \"name\": \"${1:gw-name}\",",
+      "      \"location\": \"[resourceGroup().location]\",",
+      "      \"properties\": {",
+      "        \"localNetworkAddressSpace\": {",
+      "          \"addressPrefixes\": [",
+      "            \"${2:networkprefix}\"",
+      "          ]",
+      "        },",
+      "        \"gatewayIpAddress\": \"${3:gatewayIP}\"",
+      "      }",
+      "    },"
+    ],
+    "description": "VPN Local Network Gateway"
+  },
+
+  "VPN Virtual Network Gateway": {
+    "prefix": "arm-vpn-vnet-gateway",
+    "body": [
+      "{",
+      "      \"apiVersion\": \"2015-06-15\",",
+      "      \"type\": \"Microsoft.Network/virtualNetworkGateways\",",
+      "      \"name\": \"${1:gw-name}\",",
+      "      \"location\": \"[resourceGroup().location]\",",
+      "      \"dependsOn\": [",
+      "        \"[concat('Microsoft.Network/publicIPAddresses/', ${2:gw-publicip-name})]\",",
+      "        \"[concat('Microsoft.Network/virtualNetworks/', ${3:vnet-name})]\"",
+      "      ],",
+      "      \"properties\": {",
+      "        \"ipConfigurations\": [",
+      "          {",
+      "            \"properties\": {",
+      "              \"privateIPAllocationMethod\": \"Dynamic\",",
+      "              \"subnet\": {",
+      "                \"id\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', '${3:vnet-name}', '${4:subnet-name}')]\"",
+      "              },",
+      "              \"publicIPAddress\": {",
+      "                \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses',${2:gw-publicip-name})]\"",
+      "              }",
+      "            },",
+      "            \"name\": \"vnetGatewayConfig\"",
+      "          }",
+      "        ],",
+      "        \"sku\": {",
+      "          \"name\": \"${5|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\",",
+      "          \"tier\": \"${6|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\"",
+      "        },",
+      "        \"gatewayType\": \"${7|Vpn,ExpressRoute|}\",",
+      "        \"vpnType\": \"${8|PolicyBased,RouteBased|}\",",
+      "        \"enableBgp\": \"${9|true,false|}\"",
+      "      }",
+      "    }"
+    ],
+    "description": "VPN Virtual Network Gateway"
+  },
+  "VPN Virtual Network Connection": {
+    "prefix": "arm-vpn-vnet-connection",
+    "body": [
+      " {",
+      "      \"apiVersion\": \"2015-06-15\",",
+      "      \"name\": \"${1:connection-name}\",",
+      "      \"type\": \"Microsoft.Network/connections\",",
+      "      \"location\": \"[resourceGroup().location]\",",
+      "      \"dependsOn\": [",
+      "        \"[concat('Microsoft.Network/virtualNetworkGateways/', ${2:vnetgw-name})]\",",
+      "        \"[concat('Microsoft.Network/localNetworkGateways/', ${3:localgw-name})]\"",
+      "      ],",
+      "      \"properties\": {",
+      "        \"virtualNetworkGateway1\": {",
+      "          \"id\": \"[resourceId('Microsoft.Network/virtualNetworkGateways', ${2:vnetgw-name})]\"",
+      "        },",
+      "        \"localNetworkGateway2\": {",
+      "          \"id\": \"[resourceId('Microsoft.Network/localNetworkGateways', ${3:localgw-name})]\"",
+      "        },",
+      "        \"connectionType\": \"${4|IPsec,Vnet2Vnet,ExpressRoute,VPNClient|}\",",
+      "        \"routingWeight\": ${5:routingweight},",
+      "        \"sharedKey\": \"${6:sharedkey}\"",
+      "      }",
+      "    },"
+    ],
+    "description": "VPN Virtual Network Connection"
+  }
 
 
 
