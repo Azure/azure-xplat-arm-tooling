@@ -497,10 +497,10 @@
       "      \"name\": \"${1:containerRegistryName}\",",
       "      \"location\": \"[resourceGroup().location]\",",,
       "      \"sku\": {",
-      "        \"name\": \"${2|Classic, Basic, Standard, Premium}\",",
+      "        \"name\": \"${2|Classic, Basic, Standard, Premium|}\",",
       "      },",
       "      \"properties\": {",
-      "        \"adminUserEnabled\": \"{${3|true,false|}\"",
+      "        \"adminUserEnabled\": \"${3|true,false|}\"",
       "      }",
       "    }"
     ],
