@@ -308,6 +308,21 @@
     ],
     "description": "Application Insights for Web Apps"
 },
+
+"Application Security Group": {
+    "prefix": "arm-applicaiton-security-group",
+    "body": [
+      "  {",
+      "      \"comments\": \"Application Security Group\",",
+      "      \"name\": \"{1:name}\",",
+      "      \"type\": \"Microsoft.Network/applicationSecurityGroups\",",
+      "      \"apiVersion\": \"2017-10-01\",",
+      "      \"location\": \"[resourceGroup().location]\",",
+      "      \"properties\": {}",
+      "    },"
+    ],
+    "description": "Application Security Group"
+  }
 "Automation Account": {
     "prefix": "arm-automation-account",
     "body": [
@@ -474,6 +489,24 @@
     ],
     "description": "Availability Set"
 },
+"Container Registry": {
+    "prefix": "arm-container-registry",
+    "body": [
+      "   {",
+      "      \"name\": \"[parameters('acrName')]\",",
+      "      \"type\": \"Microsoft.ContainerRegistry/registries\",",
+      "      \"apiVersion\": \"${1:containerRegistryName}\",",
+      "      \"location\": \"[resourceGroup().location]\",",,
+      "      \"sku\": {",
+      "        \"name\": \"${2|Classic, Basic, Standard, Premium}\",",
+      "      },",
+      "      \"properties\": {",
+      "        \"adminUserEnabled\": \"{${3|true,false|}\"",
+      "      }",
+      "    }"
+    ],
+    "description": "Container Registry"
+  }
 "Container Instance": {
     "prefix": "arm-container-instance",
     "body": [
@@ -612,6 +645,22 @@
     ],
     "description": "Custom Script for Windows Extension"
 },
+"Data Lake Store": {
+    "prefix": "arm-data-lake-store",
+    "body": [
+      "    {",
+      "            \"type\": \"Microsoft.DataLakeStore/accounts\",",
+      "            \"name\": \"${1:name}\",",
+      "            \"location\": \"[resourceGroup().location]\",",
+      "            \"apiVersion\": \"2016-11-01\",",
+      "            \"properties\": {",
+      "                \"newTier\": \"${2|Consumption, Commitment_1TB, Commitment_10TB, Commitment_100TB, Commitment_500TB, Commitment_1PB, Commitment_5PB|}\",",
+      "                \"encryptionState\": \"${3|enabled,disabled}\"",
+      "            }",
+      "        }"
+    ],
+    "description": "Data Lake Store"
+  }
 "DNS Zone": {
     "prefix": "arm-dns-zone",
     "body": [
@@ -1277,13 +1326,23 @@
         "    \"tags\": {",
         "        \"displayName\": \"${StorageAccount1}\"",
         "    },",
-        "    \"properties\": {",
-        "        \"accountType\": \"Standard_LRS\"",
+        "    \"sku\": {",
+        "        \"name\": \"Standard_LRS\"",
         "    }",
+        "    \"kind\": \"StorageV2\","
         "}"
     ],
     "description": "Storage Account"
 },
+"Tag Section": {
+    "prefix": "arm-tags",
+    "body": [
+      "  \"tags\": {",
+      "        \"${1:tagName}\": \"${2:tagValue}\","
+      "      },"
+    ],
+    "description": "Tag Section"
+  }
 "Trafic Manager Profile": {
     "prefix": "arm-traffic-manager",
     "body": [
@@ -1684,8 +1743,6 @@
         "                \"version\": \"latest\"",
         "            },",
         "            \"osDisk\": {",
-        "                \"name\": \"${WindowsVM1}OSDisk\",",
-        "                \"caching\": \"ReadWrite\",",
         "                \"createOption\": \"FromImage\"",
         "            }",
         "        },",
@@ -1736,6 +1793,8 @@
     ],
     "description": "Windows Virtual Machine"
 }
+
+
 
 
 
