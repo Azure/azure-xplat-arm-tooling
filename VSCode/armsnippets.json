@@ -312,13 +312,13 @@
 "Application Security Group": {
     "prefix": "arm-applicaiton-security-group",
     "body": [
-      "  {",
-      "      \"type\": \"Microsoft.Network/applicationSecurityGroups\",",
-      "      \"apiVersion\": \"2017-10-01\",",
-      "      \"name\": \"${1:name}\",",
-      "      \"location\": \"[resourceGroup().location]\",",
-      "      \"properties\": {}",
-      "    },"
+      "{",
+      "    \"type\": \"Microsoft.Network/applicationSecurityGroups\",",
+      "    \"apiVersion\": \"2017-10-01\",",
+      "    \"name\": \"${1:name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {}",
+      "},"
     ],
     "description": "Application Security Group"
   }
@@ -491,18 +491,18 @@
 "Container Registry": {
     "prefix": "arm-container-registry",
     "body": [
-      "   {",
-      "      \"type\": \"Microsoft.ContainerRegistry/registries\",",
-      "      \"apiVersion\": \"2017-10-01\",",
-      "      \"name\": \"${1:containerRegistryName}\",",
-      "      \"location\": \"[resourceGroup().location]\",",,
-      "      \"sku\": {",
-      "        \"name\": \"${2|Classic, Basic, Standard, Premium|}\",",
-      "      },",
-      "      \"properties\": {",
-      "        \"adminUserEnabled\": \"${3|true,false|}\"",
-      "      }",
-      "    }"
+      "{",
+      "    \"type\": \"Microsoft.ContainerRegistry/registries\",",
+      "    \"apiVersion\": \"2017-10-01\",",
+      "    \"name\": \"${1:containerRegistryName}\",",
+      "    \"location\": \"[resourceGroup().location]\",",,
+      "    \"sku\": {",
+      "      \"name\": \"${2|Classic, Basic, Standard, Premium|}\","
+      "    },",
+      "    \"properties\": {",
+      "      \"adminUserEnabled\": \"${3|true,false|}\"",
+      "    }",
+      "}"
     ],
     "description": "Container Registry"
   }
@@ -647,16 +647,16 @@
 "Data Lake Store": {
     "prefix": "arm-data-lake-store",
     "body": [
-      "    {",
-      "            \"type\": \"Microsoft.DataLakeStore/accounts\",",
-      "            \"apiVersion\": \"2016-11-01\",",
-      "            \"name\": \"${1:name}\",",
-      "            \"location\": \"[resourceGroup().location]\",",
-      "            \"properties\": {",
-      "                \"newTier\": \"${2|Consumption, Commitment_1TB, Commitment_10TB, Commitment_100TB, Commitment_500TB, Commitment_1PB, Commitment_5PB|}\",",
-      "                \"encryptionState\": \"${3|enabled,disabled|}\"",
-      "            }",
-      "        }"
+      "{",
+      "    \"type\": \"Microsoft.DataLakeStore/accounts\",",
+      "    \"apiVersion\": \"2016-11-01\",",
+      "    \"name\": \"${1:name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "    \"newTier\": \"${2|Consumption, Commitment_1TB, Commitment_10TB, Commitment_100TB, Commitment_500TB, Commitment_1PB, Commitment_5PB|}\",",
+      "    \"encryptionState\": \"${3|enabled,disabled|}\"",
+      "    }",
+      "}"
     ],
     "description": "Data Lake Store"
   }
@@ -938,6 +938,41 @@
     ],
     "description": "Azure Load Balancer Internal",
 },
+"Logic App": {
+    "prefix": "arm-logic-app",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.Logic/workflows\",",
+      "    \"apiVersion\": \"2016-06-01\",",
+      "    \"name\": \"${1:logicApp-Name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "      \"definition\": {",
+      "        \"$schema\": \"https://schema.management.azure.com/schemas/2016-06-01/Microsoft.Logic.json\",",
+      "        \"contentVersion\": \"1.0.0.0\",",
+      "        \"parameters\": {},",
+      "        \"triggers\": {},",
+      "        \"actions\": {},",
+      "        \"outputs\": {}",
+      "      },",
+      "      \"parameters\": {}",
+      "    }",
+      "}"
+    ],
+    "description": "Logic App"
+  },
+"Managed Identity (User Assigned)": {
+    "prefix": "arm-managed-identity",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.ManagedIdentity/userAssignedIdentities\",",
+      "    \"name\": \"${1:Identity-Name}\",",
+      "    \"apiVersion\": \"2018-11-30\",",
+      "    \"location\": \"[resourceGroup().location]\"",
+      "}"
+    ],
+    "description": "Managed Identity (User Assigned)"
+},
 "MySQL Database": {
     "prefix": "arm-mysql",
     "body": [
@@ -1045,8 +1080,8 @@
     ],
     "description": "Network Security Group Rule"
 },
-"OMS Solution": {
-    "prefix": "arm-oms-solution",
+"Log Analytcs Solution": {
+    "prefix": "arm-log-analytics-solution",
     "body": [
         "{",
         "   \"type\": \"Microsoft.OperationsManagement/solutions\",",
@@ -1075,6 +1110,24 @@
         "}"
     ],
     "description": "OMS management solution"
+},
+"Log Analytics Workspace": {
+    "prefix": "arm-log-analytics-workspace",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.OperationalInsights/workspaces\",",
+      "    \"name\": \"${1:workspace-name}\",",
+      "    \"apiVersion\": \"2015-11-01-preview\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "        \"sku\": {",
+      "            \"Name\": \"${2| Free, Standard, Premium, Unlimited, PerNode, PerGB2018, Standalone|}\"",
+      "        },",
+      "    \"retentionInDays\": 30",
+      "    }",
+      "}"
+    ],
+    "description": "Log Analytics Workspace"
 },
 "PowerShell DSC Extension": {
     "prefix": "arm-dsc",
@@ -1149,6 +1202,22 @@
         "          }",
     ],
     "description": "Azure IP Prefix",
+},
+"Recovery Service Vault": {
+    "prefix": "arm-recovery-services-vault",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.RecoveryServices/vaults\",",
+      "    \"apiVersion\": \"2018-01-10\",",
+      "    \"name\": \"${1:Vault-Name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"sku\": {",
+      "        \"name\": \"${2|RS0,Standard|}\"",
+      "    },",
+      "    \"properties\": {}",
+      "}"
+    ],
+    "description": "Recovery Service Vault"
 },
 "Redis Cache": {
     "prefix": "arm-redis",
@@ -1336,9 +1405,9 @@
 "Tag Section": {
     "prefix": "arm-tags",
     "body": [
-      "  \"tags\": {",
-      "        \"${1:tagName}\": \"${2:tagValue}\","
-      "      },"
+      " \"tags\": {",
+      "     \"${1:tagName}\": \"${2:tagValue}\"",
+      "    },"
     ],
     "description": "Tag Section"
   }
