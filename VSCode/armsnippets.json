@@ -1,4 +1,4 @@
-/*
+	/*
 // Azure Resource Manager Template Snippets 
 */
 "Azure Resource Manager (ARM) Template": {
@@ -91,7 +91,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Insights/autoscalesettings\",",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2015-04-01\",",
         "    \"name\": \"${AppInsights1}-${APP_SERVICE_PLAN_NAME}-AutoScaleSettings\",",
         "    \"location\": \"East US\",",
         "    \"tags\": {",
@@ -156,7 +156,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2016-03-01\",",
         "    \"name\": \"${AppInsights1}-CPUHigh-${APP_SERVICE_PLAN_NAME}\",",
         "    \"type\": \"Microsoft.Insights/alertrules\",",
         "    \"location\": \"East US\",",
@@ -190,7 +190,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2016-03-01\",",
         "    \"name\": \"${AppInsights1}-LongHttpQueue-${APP_SERVICE_PLAN_NAME}\",",
         "    \"type\": \"Microsoft.Insights/alertrules\",",
         "    \"location\": \"East US\",",
@@ -224,7 +224,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2016-03-01\",",
         "    \"name\": \"${AppInsights1}-ServerErrors-${WEB_APP_NAME}\",",
         "    \"type\": \"Microsoft.Insights/alertrules\",",
         "    \"location\": \"East US\",",
@@ -258,7 +258,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2016-03-01\",",
         "    \"name\": \"${AppInsights1}-ForbiddenRequests-${WEB_APP_NAME}\",",
         "    \"type\": \"Microsoft.Insights/alertrules\",",
         "    \"location\": \"East US\",",
@@ -291,7 +291,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2014-04-01\",",
+        "    \"apiVersion\": \"2015-05-01\",",
         "    \"name\": \"${AppInsights1}\",",
         "    \"type\": \"Microsoft.Insights/components\",",
         "    \"location\": \"Central US\",",
@@ -308,6 +308,20 @@
     ],
     "description": "Application Insights for Web Apps"
 },
+
+"Application Security Group": {
+    "prefix": "arm-applicaiton-security-group",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.Network/applicationSecurityGroups\",",
+      "    \"apiVersion\": \"2017-10-01\",",
+      "    \"name\": \"${1:name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {}",
+      "},"
+    ],
+    "description": "Application Security Group"
+  }
 "Automation Account": {
     "prefix": "arm-automation-account",
     "body": [
@@ -474,12 +488,30 @@
     ],
     "description": "Availability Set"
 },
+"Container Registry": {
+    "prefix": "arm-container-registry",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.ContainerRegistry/registries\",",
+      "    \"apiVersion\": \"2017-10-01\",",
+      "    \"name\": \"${1:containerRegistryName}\",",
+      "    \"location\": \"[resourceGroup().location]\",",,
+      "    \"sku\": {",
+      "      \"name\": \"${2|Classic, Basic, Standard, Premium|}\","
+      "    },",
+      "    \"properties\": {",
+      "      \"adminUserEnabled\": \"${3|true,false|}\"",
+      "    }",
+      "}"
+    ],
+    "description": "Container Registry"
+  }
 "Container Instance": {
     "prefix": "arm-container-instance",
     "body": [
         "{",
         "    \"type\": \"Microsoft.ContainerInstance/containerGroups\",",
-        "    \"apiVersion\": \"2017-10-01-preview\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${1:containerGroupName}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"properties\": {",
@@ -557,7 +589,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${UbuntuVM1}/${CustomScript1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -587,7 +619,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${WindowsVM1}/${CustomScript1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -612,6 +644,22 @@
     ],
     "description": "Custom Script for Windows Extension"
 },
+"Data Lake Store": {
+    "prefix": "arm-data-lake-store",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.DataLakeStore/accounts\",",
+      "    \"apiVersion\": \"2016-11-01\",",
+      "    \"name\": \"${1:name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "    \"newTier\": \"${2|Consumption, Commitment_1TB, Commitment_10TB, Commitment_100TB, Commitment_500TB, Commitment_1PB, Commitment_5PB|}\",",
+      "    \"encryptionState\": \"${3|enabled,disabled|}\"",
+      "    }",
+      "}"
+    ],
+    "description": "Data Lake Store"
+  }
 "DNS Zone": {
     "prefix": "arm-dns-zone",
     "body": [
@@ -650,7 +698,7 @@
     "body": [
         "{",
         "   \"type\": \"Microsoft.KeyVault/vaults\",",
-        "   \"apiVersion\": \"2015-06-01\",",
+        "   \"apiVersion\": \"2018-02-14\",",
         "   \"name\": \"${Keyvault1}\",",
         "   \"location\": \"[resourceGroup().location]\",",
         "   \"tags\": {",
@@ -680,7 +728,7 @@
         "      {",
         "        \"type\": \"secrets\",",
         "        \"name\": \"${KeyvaultSecret1}\",",
-        "        \"apiVersion\": \"2015-06-01\",",
+        "        \"apiVersion\": \"2018-02-14\",",
         "        \"properties\": {",
         "           \"value\": \"${KeyvaultSecretValue1}\"",
         "         },",
@@ -696,7 +744,7 @@
     "prefix": "arm-keyvault-secret",
     "body": [
         "{",
-        "    \"apiVersion\": \"2015-06-01\",",
+        "    \"apiVersion\": \"2018-02-14\",",
         "    \"name\": \"[concat('${Keyvault1}', '/', '${KeyvaultSecret1}')]\",",
         "    \"properties\": {",
         "        \"value\": \"${KeyvaultSecretValue1}\"",
@@ -748,7 +796,7 @@
     "prefix": "arm-lb-external",
     "body": [
         "{",
-        "    \"apiVersion\": \"2015-05-01-preview\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${1:loadBalancer-name}\",",
         "    \"type\": \"Microsoft.Network/loadBalancers\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -826,7 +874,7 @@
     "prefix": "arm-lb-internal",
     "body": [
         "{",
-        "    \"apiVersion\": \"2015-05-01-preview\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${1:loadBalancer-name}\",",
         "    \"type\": \"Microsoft.Network/loadBalancers\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -890,6 +938,41 @@
     ],
     "description": "Azure Load Balancer Internal",
 },
+"Logic App": {
+    "prefix": "arm-logic-app",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.Logic/workflows\",",
+      "    \"apiVersion\": \"2016-06-01\",",
+      "    \"name\": \"${1:logicApp-Name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "      \"definition\": {",
+      "        \"$schema\": \"https://schema.management.azure.com/schemas/2016-06-01/Microsoft.Logic.json\",",
+      "        \"contentVersion\": \"1.0.0.0\",",
+      "        \"parameters\": {},",
+      "        \"triggers\": {},",
+      "        \"actions\": {},",
+      "        \"outputs\": {}",
+      "      },",
+      "      \"parameters\": {}",
+      "    }",
+      "}"
+    ],
+    "description": "Logic App"
+  },
+"Managed Identity (User Assigned)": {
+    "prefix": "arm-managed-identity",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.ManagedIdentity/userAssignedIdentities\",",
+      "    \"name\": \"${1:Identity-Name}\",",
+      "    \"apiVersion\": \"2018-11-30\",",
+      "    \"location\": \"[resourceGroup().location]\"",
+      "}"
+    ],
+    "description": "Managed Identity (User Assigned)"
+},
 "MySQL Database": {
     "prefix": "arm-mysql",
     "body": [
@@ -914,7 +997,7 @@
     "body": [
         "{",,
         "    \"type\": \"Microsoft.Resources/deployments\",",
-        "    \"apiVersion\": \"2015-01-01\",",
+        "    \"apiVersion\": \"2018-05-01\",",
         "    \"name\": \"${NestedDeployment1}\","
         "    \"tags\": {",
         "        \"displayName\": \"${NestedDeployment1}\"",
@@ -936,7 +1019,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Network/networkInterfaces\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${NetworkInterface1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -967,7 +1050,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Network/networkSecurityGroups\",",
-        "    \"apiVersion\": \"2017-06-01\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${1:networkSecurityGroupName}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"properties\": {",
@@ -997,8 +1080,8 @@
     ],
     "description": "Network Security Group Rule"
 },
-"OMS Solution": {
-    "prefix": "arm-oms-solution",
+"Log Analytcs Solution": {
+    "prefix": "arm-log-analytics-solution",
     "body": [
         "{",
         "   \"type\": \"Microsoft.OperationsManagement/solutions\",",
@@ -1028,12 +1111,30 @@
     ],
     "description": "OMS management solution"
 },
+"Log Analytics Workspace": {
+    "prefix": "arm-log-analytics-workspace",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.OperationalInsights/workspaces\",",
+      "    \"name\": \"${1:workspace-name}\",",
+      "    \"apiVersion\": \"2015-11-01-preview\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"properties\": {",
+      "        \"sku\": {",
+      "            \"Name\": \"${2| Free, Standard, Premium, Unlimited, PerNode, PerGB2018, Standalone|}\"",
+      "        },",
+      "    \"retentionInDays\": 30",
+      "    }",
+      "}"
+    ],
+    "description": "Log Analytics Workspace"
+},
 "PowerShell DSC Extension": {
     "prefix": "arm-dsc",
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${VM_NAME}/${DSCScript1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1066,7 +1167,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Network/publicIPAddresses\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${IPAddress1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1102,12 +1203,28 @@
     ],
     "description": "Azure IP Prefix",
 },
+"Recovery Service Vault": {
+    "prefix": "arm-recovery-services-vault",
+    "body": [
+      "{",
+      "    \"type\": \"Microsoft.RecoveryServices/vaults\",",
+      "    \"apiVersion\": \"2018-01-10\",",
+      "    \"name\": \"${1:Vault-Name}\",",
+      "    \"location\": \"[resourceGroup().location]\",",
+      "    \"sku\": {",
+      "        \"name\": \"${2|RS0,Standard|}\"",
+      "    },",
+      "    \"properties\": {}",
+      "}"
+    ],
+    "description": "Recovery Service Vault"
+},
 "Redis Cache": {
     "prefix": "arm-redis",
     "body": [
         "{",
         "    \"type\": \"Microsoft.Cache/Redis\",",
-        "    \"apiVersion\": \"2014-04-01-preview\",",
+        "    \"apiVersion\": \"2018-03-01\",",
         "    \"name\": \"${RedisCache1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1188,7 +1305,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Sql/servers/databases\",",
-        "    \"apiVersion\": \"2014-04-01-preview\",",
+        "    \"apiVersion\": \"2017-10-01-preview\",",
         "    \"name\": \"${SERVER_NAME}/${SQLdb1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1212,7 +1329,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2014-04-01-preview\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${DATABASE_NAME}Import1\",",
         "    \"dependsOn\": [",
         "        \"Microsoft.Sql/servers/${SQL_SERVER_NAME}/databases/${DATABASE_NAME}\"",
@@ -1237,7 +1354,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Sql/servers\",",
-        "    \"apiVersion\": \"2014-04-01-preview\",",
+        "    \"apiVersion\": \"2015-05-01-preview\",",
         "    \"name\": \"${sqlserver1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1249,7 +1366,7 @@
         "    },",
         "    \"resources\": [",
         "        {",
-        "            \"apiVersion\": \"2014-04-01-preview\",",
+        "            \"apiVersion\": \"2015-05-01-preview\",",
         "            \"dependsOn\": [",
         "                \"Microsoft.Sql/servers/${sqlserver1}\"",
         "            ],",
@@ -1271,19 +1388,29 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-07-01\",",
         "    \"name\": \"${StorageAccount1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${StorageAccount1}\"",
         "    },",
-        "    \"properties\": {",
-        "        \"accountType\": \"Standard_LRS\"",
+        "    \"sku\": {",
+        "        \"name\": \"Standard_LRS\"",
         "    }",
+        "    \"kind\": \"StorageV2\","
         "}"
     ],
     "description": "Storage Account"
 },
+"Tag Section": {
+    "prefix": "arm-tags",
+    "body": [
+      " \"tags\": {",
+      "     \"${1:tagName}\": \"${2:tagValue}\"",
+      "    },"
+    ],
+    "description": "Tag Section"
+  }
 "Trafic Manager Profile": {
     "prefix": "arm-traffic-manager",
     "body": [
@@ -1329,7 +1456,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-07-01\",",
         "    \"name\": \"[toLower('${UbuntuVM1}storage')]\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1340,7 +1467,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/publicIPAddresses\",",
         "    \"name\": \"${UbuntuVM1}-PublicIP\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1355,7 +1482,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/virtualNetworks\",",
         "    \"name\": \"${UbuntuVM1}-VirtualNetwork\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1379,7 +1506,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/networkInterfaces\",",
         "    \"name\": \"${UbuntuVM1}-NetworkInterface\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1408,7 +1535,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2017-03-30\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
         "    \"name\": \"${UbuntuVM1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1458,7 +1585,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Network/virtualNetworks\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"name\": \"${VirtualNetwork1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1494,7 +1621,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Web/sites\",",
-        "    \"apiVersion\": \"2015-08-01\",",
+        "    \"apiVersion\": \"2018-02-01\",",
         "    \"name\": \"${WEB_APP_NAME}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1517,7 +1644,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2014-06-01\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"Deploy-${WEB_APP_NAME}\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"dependsOn\": [",
@@ -1543,7 +1670,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"name\": \"${VM_NAME}/Diagnostics\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1577,7 +1704,7 @@
     "body": [
         "{",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-07-01\",",
         "    \"name\": \"[toLower('${WindowsVM1}storage')]\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
@@ -1588,7 +1715,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/publicIPAddresses\",",
         "    \"name\": \"${WindowsVM1}-PublicIP\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1603,7 +1730,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/virtualNetworks\",",
         "    \"name\": \"${WindowsVM1}-VirtualNetwork\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1627,7 +1754,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"apiVersion\": \"2018-08-01\",",
         "    \"type\": \"Microsoft.Network/networkInterfaces\",",
         "    \"name\": \"${WindowsVM1}-NetworkInterface\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1656,7 +1783,7 @@
         "    }",
         "},",
         "{",
-        "    \"apiVersion\": \"2017-03-30\",",
+        "    \"apiVersion\": \"2018-10-01\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
         "    \"name\": \"${WindowsVM1}\",",
         "    \"location\": \"[resourceGroup().location]\",",
@@ -1684,8 +1811,6 @@
         "                \"version\": \"latest\"",
         "            },",
         "            \"osDisk\": {",
-        "                \"name\": \"${WindowsVM1}OSDisk\",",
-        "                \"caching\": \"ReadWrite\",",
         "                \"createOption\": \"FromImage\"",
         "            }",
         "        },",
@@ -1707,7 +1832,7 @@
         "        {",
         "            \"type\": \"extensions\",",
         "            \"name\": \"${WindowsVM1}AzureDiagnostics\",",
-        "            \"apiVersion\": \"2015-06-15\",",
+        "            \"apiVersion\": \"2018-10-01\",",
         "            \"location\": \"[resourceGroup().location]\",",
         "            \"tags\": {",
         "                \"displayName\": \"${WindowsVM1}AzureDiagnostics\"",
@@ -1736,26 +1861,112 @@
     ],
     "description": "Windows Virtual Machine"
 },
+"VPN Local Network Gateway": {
+  "prefix": "arm-vpn-local-gateway",
+  "body": [
+    "    {",
+    "      \"apiVersion\": \"2018-07-01\",",
+    "      \"type\": \"Microsoft.Network/localNetworkGateways\",",
+    "      \"name\": \"${1:gw-name}\",",
+    "      \"location\": \"[resourceGroup().location]\",",
+    "      \"properties\": {",
+    "        \"localNetworkAddressSpace\": {",
+    "          \"addressPrefixes\": [",
+    "            \"${2:networkprefix}\"",
+    "          ]",
+    "        },",
+    "        \"gatewayIpAddress\": \"${3:gatewayIP}\"",
+    "      }",
+    "    },"
+  ],
+  "description": "VPN Local Network Gateway"
+},
+"VPN Virtual Network Gateway": {
+  "prefix": "arm-vpn-vnet-gateway",
+  "body": [
+    "{",
+    "      \"apiVersion\": \"2015-06-15\",",
+    "      \"type\": \"Microsoft.Network/virtualNetworkGateways\",",
+    "      \"name\": \"${1:gw-name}\",",
+    "      \"location\": \"[resourceGroup().location]\",",
+    "      \"dependsOn\": [",
+    "        \"[concat('Microsoft.Network/publicIPAddresses/', ${2:gw-publicip-name})]\",",
+    "        \"[concat('Microsoft.Network/virtualNetworks/', ${3:vnet-name})]\"",
+    "      ],",
+    "      \"properties\": {",
+    "        \"ipConfigurations\": [",
+    "          {",
+    "            \"properties\": {",
+    "              \"privateIPAllocationMethod\": \"Dynamic\",",
+    "              \"subnet\": {",
+    "                \"id\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', '${3:vnet-name}', '${4:subnet-name}')]\"",
+    "              },",
+    "              \"publicIPAddress\": {",
+    "                \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses',${2:gw-publicip-name})]\"",
+    "              }",
+    "            },",
+    "            \"name\": \"vnetGatewayConfig\"",
+    "          }",
+    "        ],",
+    "        \"sku\": {",
+    "          \"name\": \"${5|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\",",
+    "          \"tier\": \"${6|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\"",
+    "        },",
+    "        \"gatewayType\": \"${7|Vpn,ExpressRoute|}\",",
+    "        \"vpnType\": \"${8|PolicyBased,RouteBased|}\",",
+    "        \"enableBgp\": \"${9|true,false|}\"",
+    "      }",
+    "    }"
+  ],
+  "description": "VPN Virtual Network Gateway"
+},
+"VPN Virtual Network Connection": {
+  "prefix": "arm-vpn-vnet-connection",
+  "body": [
+    " {",
+    "      \"apiVersion\": \"2015-06-15\",",
+    "      \"name\": \"${1:connection-name}\",",
+    "      \"type\": \"Microsoft.Network/connections\",",
+    "      \"location\": \"[resourceGroup().location]\",",
+    "      \"dependsOn\": [",
+    "        \"[concat('Microsoft.Network/virtualNetworkGateways/', ${2:vnetgw-name})]\",",
+    "        \"[concat('Microsoft.Network/localNetworkGateways/', ${3:localgw-name})]\"",
+    "      ],",
+    "      \"properties\": {",
+    "        \"virtualNetworkGateway1\": {",
+    "          \"id\": \"[resourceId('Microsoft.Network/virtualNetworkGateways', ${2:vnetgw-name})]\"",
+    "        },",
+    "        \"localNetworkGateway2\": {",
+    "          \"id\": \"[resourceId('Microsoft.Network/localNetworkGateways', ${3:localgw-name})]\"",
+    "        },",
+    "        \"connectionType\": \"${4|IPsec,Vnet2Vnet,ExpressRoute,VPNClient|}\",",
+    "        \"routingWeight\": ${5:routingweight},",
+    "        \"sharedKey\": \"${6:sharedkey}\"",
+    "      }",
+    "    },"
+  ],
+  "description": "VPN Virtual Network Connection"
+}
 "Azure Media Services":{
-    "prefix": "arm-media",
-    "body": [
-        "{",
-        "   \"apiVersion\": \"2015-10-01\",",
-        "   \"name\": \"${MediaServices_Name}\",",
-        "   \"type\": \"Microsoft.Media/mediaServices\",",
-        "   \"location\": \"[resourceGroup().location]\",",
-        "   \"properties\": {",
-        "       \"storageAccounts\": [{",
-        "		    \"id\": \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaServices_StorageAccounts_Name})]\",",
-        "           \"isPrimary\": true",
-        "   }]",
-        "},",
-        "   \"dependsOn\": [",
-        "	    \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaService_StorageAccounts_Name})]\"",
-        "   ]",
-	    "}"
-    ],
-    "description": "Azure Media Services account",
+  "prefix": "arm-media",
+  "body": [
+    "{",
+    "   \"apiVersion\": \"2015-10-01\",",
+    "   \"name\": \"${MediaServices_Name}\",",
+    "   \"type\": \"Microsoft.Media/mediaServices\",",
+    "   \"location\": \"[resourceGroup().location]\",",
+    "   \"properties\": {",
+    "       \"storageAccounts\": [{",
+    "		    \"id\": \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaServices_StorageAccounts_Name})]\",",
+    "           \"isPrimary\": true",
+    "   }]",
+    "},",
+    "   \"dependsOn\": [",
+    "	    \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaService_StorageAccounts_Name})]\"",
+    "   ]",
+    "}"
+  ],
+  "description": "Azure Media Services account",
 },
 "Azure Logic App": {
     "prefix": "arm-logicapp",
@@ -1802,6 +2013,6 @@
         "        }",
         "    }",
         "}"
-    ],
+  ],
 	"description": "Azure Logic App Connector"
 },
