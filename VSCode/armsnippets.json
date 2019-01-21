@@ -34,7 +34,7 @@
     "description": "ARM Template Variable"
 },
 "Parameter": {
-    "prefix": "arm-parameter",
+    "prefix": "arm-param",
     "body": [
         "\"${1:parameter1}\": {",
         "   \"type\": \"${2|string,securestring,int,bool,object,secureObject,array|}\",",
@@ -56,7 +56,7 @@
     "description": "ARM Template output"
 },
 "Parameter Value": {
-    "prefix": "arm-paramvalue",
+    "prefix": "arm-param-value",
     "body": [
         "\"${1:parameter1}\": {",
         "    \"value\": \"${2:value}\"",
@@ -87,7 +87,7 @@
     "description": "App Service Plan (Server Farm)"
 },
 "Application Insights for Web Apps": {
-    "prefix": "arm-ai",
+    "prefix": "arm-app-insights",
     "body": [
         "{",
         "    \"name\": \"${1:appInsights1}-${2:appServicePlan1}-AutoScaleSettings\",",
@@ -309,7 +309,7 @@
     "description": "Application Insights for Web Apps"
 },
 "Application Security Group": {
-    "prefix": "arm-applicaiton-security-group",
+    "prefix": "arm-app-security-group",
     "body": [
         "{",
         "    \"name\": \"${1:applicationSecurityGroup1}\",",
@@ -342,7 +342,7 @@
     "description": "Automation Account"
 },
 "Automation Certificate": {
-    "prefix": "arm-automation-certificate",
+    "prefix": "arm-automation-cert",
     "body": [
         "{",
         "    \"name\": \"${1:automationCertificate1}\",",
@@ -362,7 +362,7 @@
     "description": "Automation Certificate"
 },
 "Automation Credential": {
-    "prefix": "arm-automation-credential",
+    "prefix": "arm-automation-cred",
     "body": [
         "{",
         "    \"name\": \"${1:automationCredential}\",",
@@ -381,7 +381,7 @@
     "description": "Automation Credential"
 },
 "Automation Job Schedule": {
-    "prefix": "arm-automation-jobSchedule",
+    "prefix": "arm-automation-job-schedule",
     "body": [
         "{",
         "    \"name\": \"${1:automationJobSchedule1}\",",
@@ -472,7 +472,7 @@
     "description": "Automation Variable"
 },
 "Availability Set": {
-    "prefix": "arm-avail",
+    "prefix": "arm-availability-set",
     "body": [
         "{",
         "    \"name\": \"${1:availabilitySet1}\",",
@@ -644,7 +644,7 @@
     "description": "Custom Script for Windows Extension"
 },
 "Data Lake Store": {
-    "prefix": "arm-data-lake-store",
+    "prefix": "arm-data-lake",
     "body": [
         "{",
         "    \"name\": \"${1:dataLakeStore1}\",",
@@ -1010,7 +1010,7 @@
     "description": "Logic App"
 },
 "Logic App Connector": {
-    "prefix": "arm-logicapp-connector",
+    "prefix": "arm-logic-app-connector",
     "body": [
         "{",
         "    \"name\": \"${1:logicAppConnector1}\",",
@@ -1086,7 +1086,7 @@
     "description": "MySQL Database"
 },
 "Nested Deployment": {
-    "prefix": "arm-nest",
+    "prefix": "arm-nested",
     "body": [
         "{",
         "    \"name\": \"${1:nestedDeployment1}\","
@@ -1243,7 +1243,7 @@
     "description": "Public IP Prefix",
 },
 "Recovery Service Vault": {
-    "prefix": "arm-recovery-services-vault",
+    "prefix": "arm-recovery-service-vault",
     "body": [
         "{",
         "    \"name\": \"${1:recoveryServiceVault1}\",",
@@ -1282,7 +1282,7 @@
     "description": "Redis Cache"
 },
 "Resource Group": {
-    "prefix": "arm-rg",
+    "prefix": "arm-group",
     "body": [
         "{",
         "    \"name\": \"${1:resourceGroup1}\",",
@@ -1322,7 +1322,7 @@
     "description": "Route Table",
 },
 "SQL Database": {
-    "prefix": "arm-sqldb",
+    "prefix": "arm-sql-db",
     "body": [
         "{",
         "    \"name\": \"${1:sqlServer1}/${2:sqlDatabase1}\",",
@@ -1346,7 +1346,7 @@
     "description": "SQL Database"
 },
 "SQL Database Import": {
-    "prefix": "arm-sqldb-import",
+    "prefix": "arm-sql-db-import",
     "body": [
         "{",
         "    \"name\": \"${1:sqlDatabase1}Import1\",",
@@ -1371,7 +1371,7 @@
     "description": "SQL Database Import"
 },
 "SQL Server": {
-    "prefix": "arm-sqlsvr",
+    "prefix": "arm-sql-server",
     "body": [
         "{",
         "    \"name\": \"${1:sqlServer1}\",",
@@ -1714,7 +1714,7 @@
     "description": "VPN Virtual Network Connection"
 },
 "Web App": {
-    "prefix": "arm-webapp",
+    "prefix": "arm-web-app",
     "body": [
         "{",
         "    \"name\": \"${1:webApp1}\",",
@@ -1737,7 +1737,7 @@
     "description": "Web App"
 },
 "Web Deploy for Web Apps": {
-    "prefix": "arm-webdeploy",
+    "prefix": "arm-web-app-deploy",
     "body": [
         "{",
         "    \"name\": \"Deploy-${1:webApp1}\",",
@@ -1761,40 +1761,6 @@
         "}"
     ],
     "description": "Web Deploy for Web Apps"
-},
-"Windows Azure Diagnostics Extension": {
-    "prefix": "arm-diag",
-    "body": [
-        "{",
-        "    \"name\": \"${1:windowsVM1}/Diagnostics\",",
-        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2018-10-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {",
-        "        \"displayName\": \"Windows Azure Diagnostics Extension for ${1:windowsVM1}\"",
-        "    },",
-        "    \"dependsOn\": [",
-        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\",",
-        "        \"Microsoft.Storage/storageAccounts/${2:storageaccount1}\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"publisher\": \"Microsoft.Azure.Diagnostics\",",
-        "        \"type\": \"IaaSDiagnostics\",",
-        "        \"typeHandlerVersion\": \"1.5\",",
-        "        \"autoUpgradeMinorVersion\": true,",
-        "        \"settings\": {",
-        "            \"xmlCfg\": \"[base64('<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\\\"4096\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\\\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\\\"Error\\\"/> <Logs scheduledTransferPeriod=\\\"PT1M\\\" scheduledTransferLogLevelFilter=\\\"Error\\\" /> <Directories scheduledTransferPeriod=\\\"PT1M\\\"> <IISLogs containerName =\\\"wad-iis-logfiles\\\" /> <FailedRequestLogs containerName =\\\"wad-failedrequestlogs\\\" /> </Directories> <WindowsEventLog scheduledTransferPeriod=\\\"PT1M\\\" > <DataSource name=\\\"Application!*\\\" /> </WindowsEventLog> <CrashDumps containerName=\\\"wad-crashdumps\\\" dumpType=\\\"Mini\\\"> <CrashDumpConfiguration processName=\\\"WaIISHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"WaWorkerHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"w3wp.exe\\\"/> </CrashDumps> <PerformanceCounters scheduledTransferPeriod=\\\"PT1M\\\"> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Memory\\\\\\\\Available MBytes\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\ISAPI Extension Requests/sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\Bytes Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Requests/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Errors Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Queued\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Rejected\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Processor(_Total)\\\\\\\\% Processor Time\\\" sampleRate=\\\"PT3M\\\" /> </PerformanceCounters> </DiagnosticMonitorConfiguration> </WadCfg>')]\",",
-        "            \"storageAccount\": \"${2:storageaccount1}\"",
-        "        },",
-        "        \"protectedSettings\": {",
-        "            \"storageAccountName\": \"${2:storageaccount1}\",",
-        "            \"storageAccountKey\": \"[listkeys(concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/${DIAGNOSTICS_STORAGE_ACCOUNT}'), '2015-06-15').key1]\",",
-        "            \"storageAccountEndPoint\": \"https://core.windows.net\"",
-        "        }",
-        "    }",
-        "}"
-    ],
-    "description": "Windows Azure Diagnostics Extension"
 },
 "Windows Virtual Machine": {
     "prefix": "arm-vm-windows",
@@ -1957,4 +1923,38 @@
         "}"
     ],
     "description": "Windows Virtual Machine"
+},
+"Windows Virtual Machine Diagnostics Extension": {
+    "prefix": "arm-vm-windows-diagnostics",
+    "body": [
+        "{",
+        "    \"name\": \"${1:windowsVM1}/Diagnostics\",",
+        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
+        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"Diagnostics Extension for ${1:windowsVM1}\"",
+        "    },",
+        "    \"dependsOn\": [",
+        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\",",
+        "        \"Microsoft.Storage/storageAccounts/${2:storageaccount1}\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"publisher\": \"Microsoft.Azure.Diagnostics\",",
+        "        \"type\": \"IaaSDiagnostics\",",
+        "        \"typeHandlerVersion\": \"1.5\",",
+        "        \"autoUpgradeMinorVersion\": true,",
+        "        \"settings\": {",
+        "            \"xmlCfg\": \"[base64('<WadCfg> <DiagnosticMonitorConfiguration overallQuotaInMB=\\\"4096\\\" xmlns=\\\"http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration\\\"> <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter=\\\"Error\\\"/> <Logs scheduledTransferPeriod=\\\"PT1M\\\" scheduledTransferLogLevelFilter=\\\"Error\\\" /> <Directories scheduledTransferPeriod=\\\"PT1M\\\"> <IISLogs containerName =\\\"wad-iis-logfiles\\\" /> <FailedRequestLogs containerName =\\\"wad-failedrequestlogs\\\" /> </Directories> <WindowsEventLog scheduledTransferPeriod=\\\"PT1M\\\" > <DataSource name=\\\"Application!*\\\" /> </WindowsEventLog> <CrashDumps containerName=\\\"wad-crashdumps\\\" dumpType=\\\"Mini\\\"> <CrashDumpConfiguration processName=\\\"WaIISHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"WaWorkerHost.exe\\\"/> <CrashDumpConfiguration processName=\\\"w3wp.exe\\\"/> </CrashDumps> <PerformanceCounters scheduledTransferPeriod=\\\"PT1M\\\"> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Memory\\\\\\\\Available MBytes\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\ISAPI Extension Requests/sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Web Service(_Total)\\\\\\\\Bytes Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Requests/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET Applications(__Total__)\\\\\\\\Errors Total/Sec\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Queued\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\ASP.NET\\\\\\\\Requests Rejected\\\" sampleRate=\\\"PT3M\\\" /> <PerformanceCounterConfiguration counterSpecifier=\\\"\\\\\\\\Processor(_Total)\\\\\\\\% Processor Time\\\" sampleRate=\\\"PT3M\\\" /> </PerformanceCounters> </DiagnosticMonitorConfiguration> </WadCfg>')]\",",
+        "            \"storageAccount\": \"${2:storageaccount1}\"",
+        "        },",
+        "        \"protectedSettings\": {",
+        "            \"storageAccountName\": \"${2:storageaccount1}\",",
+        "            \"storageAccountKey\": \"[listkeys(concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/${DIAGNOSTICS_STORAGE_ACCOUNT}'), '2015-06-15').key1]\",",
+        "            \"storageAccountEndPoint\": \"https://core.windows.net\"",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "description": "Windows Virtual Machine Diagnostics Extension"
 },
