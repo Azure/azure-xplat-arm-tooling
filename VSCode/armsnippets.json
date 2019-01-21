@@ -320,7 +320,7 @@
         "},"
     ],
     "description": "Application Security Group"
-}
+},
 "Automation Account": {
     "prefix": "arm-automation-account",
     "body": [
@@ -340,25 +340,6 @@
         "}",
     ],
     "description": "Automation Account"
-},
-"Automation Credential": {
-    "prefix": "arm-automation-credential",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.Automation/automationAccounts/credentials\",",
-        "    \"apiVersion\": \"2015-10-31\",",
-        "    \"name\": \"${1:credential-name}\",",
-        "    \"dependsOn\": [",
-        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"userName\": \"${3:userName}\",",
-        "        \"password\": \"${4:password}\",",
-        "        \"description\": \"${5:description}\"",
-        "    }",
-        "}",
-    ],
-    "description": "Automation Credential"
 },
 "Automation Certificate": {
     "prefix": "arm-automation-certificate",
@@ -380,24 +361,48 @@
     ],
     "description": "Automation Certificate"
 },
-"Automation Variable": {
-    "prefix": "arm-automation-variable",
+"Automation Credential": {
+    "prefix": "arm-automation-credential",
     "body": [
         "{",
-        "    \"type\": \"Microsoft.Automation/automationAccounts/variables\",",
+        "    \"type\": \"Microsoft.Automation/automationAccounts/credentials\",",
         "    \"apiVersion\": \"2015-10-31\",",
-        "    \"name\": \"${1:variable-name}\",",
+        "    \"name\": \"${1:credential-name}\",",
         "    \"dependsOn\": [",
         "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
         "    ],",
         "    \"properties\": {",
-        "        \"value\": \"${3:value}\",",
-        "        \"description\": \"${4:description}\",",
-        "        \"isEncryptede\": ${5|true,false|}",
+        "        \"userName\": \"${3:userName}\",",
+        "        \"password\": \"${4:password}\",",
+        "        \"description\": \"${5:description}\"",
         "    }",
         "}",
     ],
-    "description": "Automation Variable"
+    "description": "Automation Credential"
+},
+"Automation Job Schedule": {
+    "prefix": "arm-automation-jobSchedule",
+    "body": [
+        "{",
+        "    \"type\": \"Microsoft.Automation/automationAccounts/jobSchedules\",",
+        "    \"apiVersion\": \"2015-10-31\",",
+        "    \"name\": \"${1:jobSchedule-name}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {},",
+        "    \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"schedule\": {",
+        "            \"name\": \"${3:schedule-name}\"",
+        "        },",
+        "        \"runbook\": {",
+        "            \"name\": \"${4:runbook-name}\"",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "description": "Automation Job Schedule"
 },
 "Automation Runbook": {
     "prefix": "arm-automation-runbook",
@@ -447,29 +452,24 @@
     ],
     "description": "Automation Schedule"
 },
-"Automation Job Schedule": {
-    "prefix": "arm-automation-jobSchedule",
+"Automation Variable": {
+    "prefix": "arm-automation-variable",
     "body": [
         "{",
-        "    \"type\": \"Microsoft.Automation/automationAccounts/jobSchedules\",",
+        "    \"type\": \"Microsoft.Automation/automationAccounts/variables\",",
         "    \"apiVersion\": \"2015-10-31\",",
-        "    \"name\": \"${1:jobSchedule-name}\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {},",
+        "    \"name\": \"${1:variable-name}\",",
         "    \"dependsOn\": [",
         "        \"[resourceId('Microsoft.Automation/automationAccounts', ${2:automationAccount}]\"",
         "    ],",
         "    \"properties\": {",
-        "        \"schedule\": {",
-        "            \"name\": \"${3:schedule-name}\"",
-        "        },",
-        "        \"runbook\": {",
-        "            \"name\": \"${4:runbook-name}\"",
-        "        }",
+        "        \"value\": \"${3:value}\",",
+        "        \"description\": \"${4:description}\",",
+        "        \"isEncryptede\": ${5|true,false|}",
         "    }",
-        "}"
+        "}",
     ],
-    "description": "Automation Job Schedule"
+    "description": "Automation Variable"
 },
 "Availability Set": {
     "prefix": "arm-avail",
@@ -487,24 +487,6 @@
     ],
     "description": "Availability Set"
 },
-"Container Registry": {
-    "prefix": "arm-container-registry",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.ContainerRegistry/registries\",",
-        "    \"apiVersion\": \"2017-10-01\",",
-        "    \"name\": \"${1:containerRegistryName}\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"sku\": {",
-        "        \"name\": \"${2|Classic, Basic, Standard, Premium|}\","
-        "    },",
-        "    \"properties\": {",
-        "        \"adminUserEnabled\": \"${3|true,false|}\"",
-        "    }",
-        "}"
-    ],
-    "description": "Container Registry"
-}
 "Container Instance": {
     "prefix": "arm-container-instance",
     "body": [
@@ -547,6 +529,24 @@
         "}"
     ],
     "description": "Container Instance"
+},
+"Container Registry": {
+    "prefix": "arm-container-registry",
+    "body": [
+        "{",
+        "    \"type\": \"Microsoft.ContainerRegistry/registries\",",
+        "    \"apiVersion\": \"2017-10-01\",",
+        "    \"name\": \"${1:containerRegistryName}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"sku\": {",
+        "        \"name\": \"${2|Classic, Basic, Standard, Premium|}\","
+        "    },",
+        "    \"properties\": {",
+        "        \"adminUserEnabled\": \"${3|true,false|}\"",
+        "    }",
+        "}"
+    ],
+    "description": "Container Registry"
 },
 "Cosmos DB Database Account": {
     "prefix": "arm-cosmos-account",
@@ -658,19 +658,6 @@
         "}"
     ],
     "description": "Data Lake Store"
-}
-"DNS Zone": {
-    "prefix": "arm-dns-zone",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.Network/dnszones\",",
-        "    \"apiVersion\": \"2017-09-01\",",
-        "    \"name\": \"${1:dnsZoneName}\",",
-        "    \"location\": \"global\",",
-        "    \"properties\": { }",
-        "  }"
-    ],
-    "description": "DNS Zone"
 },
 "DNS Record": {
     "prefix": "arm-dns-record",
@@ -691,6 +678,19 @@
         " }"
     ],
     "description": "DNS Record"
+},
+"DNS Zone": {
+    "prefix": "arm-dns-zone",
+    "body": [
+        "{",
+        "    \"type\": \"Microsoft.Network/dnszones\",",
+        "    \"apiVersion\": \"2017-09-01\",",
+        "    \"name\": \"${1:dnsZoneName}\",",
+        "    \"location\": \"global\",",
+        "    \"properties\": { }",
+        "  }"
+    ],
+    "description": "DNS Zone"
 },
 "KeyVault": {
     "prefix": "arm-keyvault",
@@ -935,6 +935,55 @@
     ],
     "description": "Load Balancer Internal",
 },
+"Log Analytcs Solution": {
+    "prefix": "arm-log-analytics-solution",
+    "body": [
+        "{",
+        "    \"type\": \"Microsoft.OperationsManagement/solutions\",",
+        "    \"apiVersion\": \"2015-11-01-preview\",",
+        "    \"name\": \"[concat(${solutionName}, [${workSpaceName}])]\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {  },",
+        "    \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"workspaceResourceId\": \"[resourceId('Microsoft.OperationalInsights/workspaces', ${workSpaceName})]\",",
+        "        \"referencedResources\": [",
+        "        ],",
+        "        \"containedResources\": [",
+        "            \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
+        "        ]",
+        "    },",
+        "    \"plan\": {",
+        "        \"name\": \"[concat(${solutionName}, '[' ,${workSpaceName}, ']')]\",",
+        "        \"Version\": \"${1.0.0.0}\",",
+        "        \"product\": \"${product}\",",
+        "        \"publisher\": \"${publisher}\",",
+        "        \"promotionCode\": \"${}\"",
+        "    }",
+        "}"
+    ],
+    "description": "OMS management solution"
+},
+"Log Analytics Workspace": {
+    "prefix": "arm-log-analytics-workspace",
+    "body": [
+        "{",
+        "    \"type\": \"Microsoft.OperationalInsights/workspaces\",",
+        "    \"name\": \"${1:workspace-name}\",",
+        "    \"apiVersion\": \"2015-11-01-preview\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"properties\": {",
+        "        \"sku\": {",
+        "            \"Name\": \"${2| Free, Standard, Premium, Unlimited, PerNode, PerGB2018, Standalone|}\"",
+        "        },",
+        "    \"retentionInDays\": 30",
+        "    }",
+        "}"
+    ],
+    "description": "Log Analytics Workspace"
+},
 "Logic App": {
     "prefix": "arm-logic-app",
     "body": [
@@ -958,6 +1007,28 @@
     ],
     "description": "Logic App"
 },
+"Logic App Connector": {
+    "prefix": "arm-logicapp-connector",
+    "body": [
+        "{",
+        "    \"name\": \"${1:logicapp-connector-name}\",",
+        "    \"type\": \"Microsoft.Web/connections\",",
+        "    \"apiVersion\": \"2016-06-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {},",
+        "    \"properties\": {",
+        "        \"displayName\": \"${2:logicapp-connector-displayname}\",",
+        "        \"parameterValues\": {},",
+        "        \"customParameterValues\": {},",
+        "        \"nonSecretParameterValues\": {},",
+        "        \"api\": {",
+        "            \"id\": \"[concat(subscription().id,'/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/${3:logicapp-connector-api}')]\"",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "description": "Logic App Connector"
+},
 "Managed Identity (User Assigned)": {
     "prefix": "arm-managed-identity",
     "body": [
@@ -969,6 +1040,29 @@
         "}"
     ],
     "description": "Managed Identity (User Assigned)"
+},
+"Media Services": {
+    "prefix": "arm-media",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2015-10-01\",",
+        "    \"name\": \"${MediaServices_Name}\",",
+        "    \"type\": \"Microsoft.Media/mediaServices\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaService_StorageAccounts_Name})]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"storageAccounts\": [",
+        "            {",
+        "                \"id\": \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaServices_StorageAccounts_Name})]\",",
+        "                \"isPrimary\": true",
+        "            }",
+        "        ]",
+        "    }",
+        "}"
+    ],
+    "description": "Media Services account",
 },
 "MySQL Database": {
     "prefix": "arm-mysql",
@@ -1076,55 +1170,6 @@
         "}"
     ],
     "description": "Network Security Group Rule"
-},
-"Log Analytcs Solution": {
-    "prefix": "arm-log-analytics-solution",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.OperationsManagement/solutions\",",
-        "    \"apiVersion\": \"2015-11-01-preview\",",
-        "    \"name\": \"[concat(${solutionName}, [${workSpaceName}])]\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {  },",
-        "    \"dependsOn\": [",
-        "        \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"workspaceResourceId\": \"[resourceId('Microsoft.OperationalInsights/workspaces', ${workSpaceName})]\",",
-        "        \"referencedResources\": [",
-        "        ],",
-        "        \"containedResources\": [",
-        "            \"[resourceId('Microsoft.OperationalInsights/workspaces/views', ${workSpaceName}, ${solutionName})]\"",
-        "        ]",
-        "    },",
-        "    \"plan\": {",
-        "        \"name\": \"[concat(${solutionName}, '[' ,${workSpaceName}, ']')]\",",
-        "        \"Version\": \"${1.0.0.0}\",",
-        "        \"product\": \"${product}\",",
-        "        \"publisher\": \"${publisher}\",",
-        "        \"promotionCode\": \"${}\"",
-        "    }",
-        "}"
-    ],
-    "description": "OMS management solution"
-},
-"Log Analytics Workspace": {
-    "prefix": "arm-log-analytics-workspace",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.OperationalInsights/workspaces\",",
-        "    \"name\": \"${1:workspace-name}\",",
-        "    \"apiVersion\": \"2015-11-01-preview\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"properties\": {",
-        "        \"sku\": {",
-        "            \"Name\": \"${2| Free, Standard, Premium, Unlimited, PerNode, PerGB2018, Standalone|}\"",
-        "        },",
-        "    \"retentionInDays\": 30",
-        "    }",
-        "}"
-    ],
-    "description": "Log Analytics Workspace"
 },
 "PowerShell DSC Extension": {
     "prefix": "arm-dsc",
@@ -1601,6 +1646,92 @@
     ],
     "description": "Virtual Network"
 },
+"VPN Local Network Gateway": {
+    "prefix": "arm-vpn-local-gateway",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2018-07-01\",",
+        "    \"type\": \"Microsoft.Network/localNetworkGateways\",",
+        "    \"name\": \"${1:gw-name}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"properties\": {",
+        "        \"localNetworkAddressSpace\": {",
+        "            \"addressPrefixes\": [",
+        "                \"${2:networkprefix}\"",
+        "            ]",
+        "        },",
+        "        \"gatewayIpAddress\": \"${3:gatewayIP}\"",
+        "    }",
+        "},"
+    ],
+    "description": "VPN Local Network Gateway"
+},
+"VPN Virtual Network Gateway": {
+    "prefix": "arm-vpn-vnet-gateway",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"type\": \"Microsoft.Network/virtualNetworkGateways\",",
+        "    \"name\": \"${1:gw-name}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"dependsOn\": [",
+        "        \"[concat('Microsoft.Network/publicIPAddresses/', ${2:gw-publicip-name})]\",",
+        "        \"[concat('Microsoft.Network/virtualNetworks/', ${3:vnet-name})]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"ipConfigurations\": [",
+        "            {",
+        "                \"name\": \"vnetGatewayConfig\"",
+        "                \"properties\": {",
+        "                    \"privateIPAllocationMethod\": \"Dynamic\",",
+        "                    \"subnet\": {",
+        "                        \"id\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', '${3:vnet-name}', '${4:subnet-name}')]\"",
+        "                    },",
+        "                    \"publicIPAddress\": {",
+        "                        \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses',${2:gw-publicip-name})]\"",
+        "                    }",
+        "                },",
+        "            }",
+        "        ],",
+        "        \"sku\": {",
+        "            \"name\": \"${5|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\",",
+        "            \"tier\": \"${6|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\"",
+        "        },",
+        "        \"gatewayType\": \"${7|Vpn,ExpressRoute|}\",",
+        "        \"vpnType\": \"${8|PolicyBased,RouteBased|}\",",
+        "        \"enableBgp\": \"${9|true,false|}\"",
+        "    }",
+        "}"
+    ],
+    "description": "VPN Virtual Network Gateway"
+},
+"VPN Virtual Network Connection": {
+    "prefix": "arm-vpn-vnet-connection",
+    "body": [
+        "{",
+        "    \"apiVersion\": \"2015-06-15\",",
+        "    \"name\": \"${1:connection-name}\",",
+        "    \"type\": \"Microsoft.Network/connections\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"dependsOn\": [",
+        "        \"[concat('Microsoft.Network/virtualNetworkGateways/', ${2:vnetgw-name})]\",",
+        "        \"[concat('Microsoft.Network/localNetworkGateways/', ${3:localgw-name})]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"virtualNetworkGateway1\": {",
+        "            \"id\": \"[resourceId('Microsoft.Network/virtualNetworkGateways', ${2:vnetgw-name})]\"",
+        "        },",
+        "        \"localNetworkGateway2\": {",
+        "            \"id\": \"[resourceId('Microsoft.Network/localNetworkGateways', ${3:localgw-name})]\"",
+        "        },",
+        "        \"connectionType\": \"${4|IPsec,Vnet2Vnet,ExpressRoute,VPNClient|}\",",
+        "        \"routingWeight\": ${5:routingweight},",
+        "        \"sharedKey\": \"${6:sharedkey}\"",
+        "    }",
+        "},"
+    ],
+    "description": "VPN Virtual Network Connection"
+},
 "Web App": {
     "prefix": "arm-webapp",
     "body": [
@@ -1845,161 +1976,4 @@
         "}"
     ],
     "description": "Windows Virtual Machine"
-},
-"VPN Local Network Gateway": {
-    "prefix": "arm-vpn-local-gateway",
-    "body": [
-        "{",
-        "    \"apiVersion\": \"2018-07-01\",",
-        "    \"type\": \"Microsoft.Network/localNetworkGateways\",",
-        "    \"name\": \"${1:gw-name}\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"properties\": {",
-        "        \"localNetworkAddressSpace\": {",
-        "            \"addressPrefixes\": [",
-        "                \"${2:networkprefix}\"",
-        "            ]",
-        "        },",
-        "        \"gatewayIpAddress\": \"${3:gatewayIP}\"",
-        "    }",
-        "},"
-    ],
-    "description": "VPN Local Network Gateway"
-},
-"VPN Virtual Network Gateway": {
-    "prefix": "arm-vpn-vnet-gateway",
-    "body": [
-        "{",
-        "    \"apiVersion\": \"2015-06-15\",",
-        "    \"type\": \"Microsoft.Network/virtualNetworkGateways\",",
-        "    \"name\": \"${1:gw-name}\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"dependsOn\": [",
-        "        \"[concat('Microsoft.Network/publicIPAddresses/', ${2:gw-publicip-name})]\",",
-        "        \"[concat('Microsoft.Network/virtualNetworks/', ${3:vnet-name})]\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"ipConfigurations\": [",
-        "            {",
-        "                \"name\": \"vnetGatewayConfig\"",
-        "                \"properties\": {",
-        "                    \"privateIPAllocationMethod\": \"Dynamic\",",
-        "                    \"subnet\": {",
-        "                        \"id\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', '${3:vnet-name}', '${4:subnet-name}')]\"",
-        "                    },",
-        "                    \"publicIPAddress\": {",
-        "                        \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses',${2:gw-publicip-name})]\"",
-        "                    }",
-        "                },",
-        "            }",
-        "        ],",
-        "        \"sku\": {",
-        "            \"name\": \"${5|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\",",
-        "            \"tier\": \"${6|Basic,HighPerformance,Standard,UltraPerformance,VpnGw1,VpnGw2,VpnGw3,VpnGw1AZ,VpnGw2AZ,VpnGw3AZ,ErGw1AZ,ErGw2AZ,ErGw3AZ|}\"",
-        "        },",
-        "        \"gatewayType\": \"${7|Vpn,ExpressRoute|}\",",
-        "        \"vpnType\": \"${8|PolicyBased,RouteBased|}\",",
-        "        \"enableBgp\": \"${9|true,false|}\"",
-        "    }",
-        "}"
-    ],
-    "description": "VPN Virtual Network Gateway"
-},
-"VPN Virtual Network Connection": {
-    "prefix": "arm-vpn-vnet-connection",
-    "body": [
-        "{",
-        "    \"apiVersion\": \"2015-06-15\",",
-        "    \"name\": \"${1:connection-name}\",",
-        "    \"type\": \"Microsoft.Network/connections\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"dependsOn\": [",
-        "        \"[concat('Microsoft.Network/virtualNetworkGateways/', ${2:vnetgw-name})]\",",
-        "        \"[concat('Microsoft.Network/localNetworkGateways/', ${3:localgw-name})]\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"virtualNetworkGateway1\": {",
-        "            \"id\": \"[resourceId('Microsoft.Network/virtualNetworkGateways', ${2:vnetgw-name})]\"",
-        "        },",
-        "        \"localNetworkGateway2\": {",
-        "            \"id\": \"[resourceId('Microsoft.Network/localNetworkGateways', ${3:localgw-name})]\"",
-        "        },",
-        "        \"connectionType\": \"${4|IPsec,Vnet2Vnet,ExpressRoute,VPNClient|}\",",
-        "        \"routingWeight\": ${5:routingweight},",
-        "        \"sharedKey\": \"${6:sharedkey}\"",
-        "    }",
-        "},"
-    ],
-    "description": "VPN Virtual Network Connection"
-}
-"Media Services": {
-    "prefix": "arm-media",
-    "body": [
-        "{",
-        "    \"apiVersion\": \"2015-10-01\",",
-        "    \"name\": \"${MediaServices_Name}\",",
-        "    \"type\": \"Microsoft.Media/mediaServices\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"dependsOn\": [",
-        "        \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaService_StorageAccounts_Name})]\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"storageAccounts\": [",
-        "            {",
-        "                \"id\": \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaServices_StorageAccounts_Name})]\",",
-        "                \"isPrimary\": true",
-        "            }",
-        "        ]",
-        "    }",
-        "}"
-    ],
-    "description": "Media Services account",
-},
-"Logic App": {
-    "prefix": "arm-logicapp",
-    "body": [
-        "{",
-        "    \"type\": \"Microsoft.Logic/workflows\",",
-        "    \"name\": \"${1:logicapp-name}\",",
-        "    \"apiVersion\": \"2017-07-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {},",
-        "    \"dependsOn\": [],",
-        "    \"properties\": {",
-        "        \"state\": \"Disabled\",",
-        "        \"definition\": {",
-        "            \"$$schema\": \"https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#\",",
-        "            \"contentVersion\": \"1.0.0.0\",",
-        "            \"parameters\": {},",
-        "            \"triggers\": {},",
-        "            \"actions\": {},",
-        "            \"outputs\": {}",
-        "        },",
-        "        \"parameters\": {}",
-        "    }",
-        "}",
-    ],
-    "description": "Logic App"
-},
-"Logic App Connector": {
-    "prefix": "arm-logicapp-connector",
-    "body": [
-        "{",
-        "    \"name\": \"${1:logicapp-connector-name}\",",
-        "    \"type\": \"Microsoft.Web/connections\",",
-        "    \"apiVersion\": \"2016-06-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {},",
-        "    \"properties\": {",
-        "        \"displayName\": \"${2:logicapp-connector-displayname}\",",
-        "        \"parameterValues\": {},",
-        "        \"customParameterValues\": {},",
-        "        \"nonSecretParameterValues\": {},",
-        "        \"api\": {",
-        "            \"id\": \"[concat(subscription().id,'/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/${3:logicapp-connector-api}')]\"",
-        "        }",
-        "    }",
-        "}"
-    ],
-    "description": "Logic App Connector"
 },
