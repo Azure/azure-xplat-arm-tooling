@@ -1735,8 +1735,25 @@
         "}"
     ],
     "description": "Windows Virtual Machine"
-}
-
-
-
-
+},
+"Azure Media Services":{
+    "prefix": "arm-media",
+    "body": [
+        "{",
+        "   \"apiVersion\": \"2015-10-01\",",
+        "   \"name\": \"${MediaServices_Name}\",",
+        "   \"type\": \"Microsoft.Media/mediaServices\",",
+        "   \"location\": \"[resourceGroup().location]\",",
+        "   \"properties\": {",
+        "       \"storageAccounts\": [{",
+        "		    \"id\": \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaServices_StorageAccounts_Name})]\",",
+        "           \"isPrimary\": true",
+        "   }]",
+        "},",
+        "   \"dependsOn\": [",
+        "	    \"[resourceId('Microsoft.Storage/storageAccounts', ${MediaService_StorageAccounts_Name})]\"",
+        "   ]",
+	    "}"
+    ],
+    "description": "Azure Media Services account",
+},
