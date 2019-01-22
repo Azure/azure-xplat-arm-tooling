@@ -45,6 +45,20 @@
     ],
     "description": "ARM Template Parameter"
 },
+"Resource Group": {
+    "prefix": "arm-group",
+    "body": [
+        "{",
+        "    \"name\": \"${1:resourceGroup1}\",",
+        "    \"type\": \"Microsoft.Resources/resourceGroups\",",
+        "    \"apiVersion\": \"2018-05-01\",",
+        "    \"location\": \"${2:location}\",",
+        "    \"tags\": {},",
+        "    \"properties\": {}",
+        "}",
+    ],
+    "description": "Resource Group"
+},
 "Output": {
     "prefix": "arm-output",
     "body": [
@@ -63,6 +77,28 @@
         "}"
     ],
     "description": "ARM Template Parameter value used in a azuredeploy.parameters.json file"
+},
+"Nested Deployment": {
+    "prefix": "arm-nested",
+    "body": [
+        "{",
+        "    \"name\": \"${1:nestedDeployment1}\","
+        "    \"type\": \"Microsoft.Resources/deployments\",",
+        "    \"apiVersion\": \"2018-05-01\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${1:nestedDeployment1}\"",
+        "    },",
+        "    \"properties\": {",
+        "        \"mode\": \"Incremental\",",
+        "        \"templateLink\": {",
+        "            \"uri\": \"[concat(parameters('_artifactsLocation'), '/${2:nestedTemplates}/${3:nestedTemplate.json}', parameters('_artifactsLocationSasToken'))]\",",
+        "            \"contentVersion\": \"1.0.0.0\"",
+        "        },",
+        "        \"parameters\": {}",
+        "    }",
+        "}"
+    ],
+    "description": "Nested Deployment"
 },
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
@@ -84,7 +120,7 @@
         "    }",
         "}"
     ],
-    "description": "App Service Plan (Server Farm)"
+    "description": "Application Service Plan (Server Farm)"
 },
 "Application Insights for Web Apps": {
     "prefix": "arm-app-insights",
@@ -302,7 +338,8 @@
         "        \"Microsoft.Web/sites/${3:webApp1}\"",
         "    ],",
         "    \"properties\": {",
-        "        \"applicationId\": \"${3:webApp1}\"",
+        "        \"applicationId\": \"${3:webApp1}\",",
+        "        \"application_Type\": \"web\"",
         "    }",
         "}"
     ],
@@ -581,69 +618,9 @@
         "    }",
         "}",
     ],
-    "description": "Cosmos DB Account"
+    "description": "Cosmos DB Database Account"
 },
-"Custom Script for Linux Extension": {
-    "prefix": "arm-script-linux",
-    "body": [
-        "{",
-        "    \"name\": \"${1:ubuntuVM1}/${2:customScript1}\",",
-        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2018-10-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {",
-        "        \"displayName\": \"${2:customScript1} for Linux VM\"",
-        "    },",
-        "    \"dependsOn\": [",
-        "        \"Microsoft.Compute/virtualMachines/${1:ubuntuVM1}\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"publisher\": \"Microsoft.OSTCExtensions\",",
-        "        \"type\": \"CustomScriptForLinux\",",
-        "        \"typeHandlerVersion\": \"1.4\",",
-        "        \"autoUpgradeMinorVersion\": true,",
-        "        \"settings\": {",
-        "            \"fileUris\": [",
-        "                \"[concat(parameters('${3:artifactsLocation}'), '/${4:scripts}/${5:customScript.sh}', parameters('${6:artifactsLocationSasToken}'))]\"",
-        "            ],",
-        "            \"commandToExecute\": \"sh ${5:customScript.sh}\"",
-        "        }",
-        "    }",
-        "}"
-    ],
-    "description": "Custom Script for Linux Extension"
-},
-"Custom Script for Windows Extension": {
-    "prefix": "arm-script-windows",
-    "body": [
-        "{",
-        "    \"name\": \"${1:windowsVM1}/${2:customScript1}\",",
-        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2018-10-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {",
-        "        \"displayName\": \"${2:customScript1} for Windows VM\"",
-        "    },",
-        "    \"dependsOn\": [",
-        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"publisher\": \"Microsoft.Compute\",",
-        "        \"type\": \"CustomScriptExtension\",",
-        "        \"typeHandlerVersion\": \"1.4\",",
-        "        \"autoUpgradeMinorVersion\": true,",
-        "        \"settings\": {",
-        "            \"fileUris\": [",
-        "                \"[concat(parameters('${3:artifactsLocation}'), '/${4:scripts}/${5:customScript.ps1}', parameters('${6:artifactsLocationSasToken}'))]\"",
-        "            ],",
-        "            \"commandToExecute\": \"powershell -ExecutionPolicy Bypass -file ${5:customScript.ps1}\"",
-        "        }",
-        "    }",
-        "}"
-    ],
-    "description": "Custom Script for Windows Extension"
-},
-"Data Lake Store": {
+"Data Lake Store Account": {
     "prefix": "arm-data-lake",
     "body": [
         "{",
@@ -657,7 +634,7 @@
         "    }",
         "}"
     ],
-    "description": "Data Lake Store"
+    "description": "Data Lake Store Account"
 },
 "DNS Record": {
     "prefix": "arm-dns-record",
@@ -674,7 +651,7 @@
         "        \"TTL\": 3600,",
         "        \"${4|Arecords,AAAARecords,MXRecords,NSRecords,PTRRecords,SRVRecords,TXTRecords,CNAMERecord,SOARecord|}\": []",
         "    }",
-        " }"
+        "}"
     ],
     "description": "DNS Record"
 },
@@ -687,7 +664,7 @@
         "    \"apiVersion\": \"2017-09-01\",",
         "    \"location\": \"global\",",
         "    \"properties\": { }",
-        "  }"
+        "}"
     ],
     "description": "DNS Zone"
 },
@@ -695,14 +672,14 @@
     "prefix": "arm-keyvault",
     "body": [
         "{",
-        "   \"type\": \"Microsoft.KeyVault/vaults\",",
-        "   \"apiVersion\": \"2018-02-14\",",
-        "   \"name\": \"${1:keyVault1}\",",
-        "   \"location\": \"[resourceGroup().location]\",",
-        "   \"tags\": {",
+        "    \"type\": \"Microsoft.KeyVault/vaults\",",
+        "    \"apiVersion\": \"2018-02-14\",",
+        "    \"name\": \"${1:keyVault1}\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
         "        \"displayName\": \"${1:keyVault1}\"",
-        "   },",
-        "   \"properties\": {",
+        "    },",
+        "    \"properties\": {",
         "        \"enabledForDeployment\": true,",
         "        \"enabledForTemplateDeployment\": true,",
         "        \"enabledForDiskEncryption\": true,",
@@ -723,20 +700,21 @@
         "        }",
         "    },",
         "    \"resources\": [",
-        "    {",
-        "        \"type\": \"secrets\",",
-        "        \"name\": \"${2:keyVaultSecret1}\",",
-        "        \"apiVersion\": \"2018-02-14\",",
-        "        \"dependsOn\": [",
-        "            \"[concat('Microsoft.KeyVault/vaults/', ${1:keyVault1})]\"",
-        "        ]",
-        "        \"properties\": {",
-        "            \"value\": \"${3:secretValue}\"",
-        "        },",
-        "    }]",
+        "        {",
+        "            \"type\": \"secrets\",",
+        "            \"name\": \"${2:keyVaultSecret1}\",",
+        "            \"apiVersion\": \"2018-02-14\",",
+        "            \"dependsOn\": [",
+        "                \"[concat('Microsoft.KeyVault/vaults/', ${1:keyVault1})]\"",
+        "            ]",
+        "            \"properties\": {",
+        "                \"value\": \"${3:secretValue}\"",
+        "            },",
+        "        }",
+        "    ]",
         "}"
     ],
-    "description": "Keyvault with Secret"
+    "description": "KeyVault with a Secret"
 },
 "KeyVault Secret": {
     "prefix": "arm-keyvault-secret",
@@ -752,7 +730,7 @@
     ],
     "description": "KeyVault Secret"
 },
-"Kubernetes Service": {
+"Kubernetes Service Cluster": {
     "prefix": "arm-aks-cluster",
     "body": [
         "{",
@@ -790,6 +768,36 @@
         "}"
     ],
     "description": "Kubernetes Service Cluster"
+},
+"Linux VM Custom Script": {
+    "prefix": "arm-vm-script-linux",
+    "body": [
+        "{",
+        "    \"name\": \"${1:ubuntuVM1}/${2:customScript1}\",",
+        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
+        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${2:customScript1} for Linux VM\"",
+        "    },",
+        "    \"dependsOn\": [",
+        "        \"Microsoft.Compute/virtualMachines/${1:ubuntuVM1}\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"publisher\": \"Microsoft.OSTCExtensions\",",
+        "        \"type\": \"CustomScriptForLinux\",",
+        "        \"typeHandlerVersion\": \"1.4\",",
+        "        \"autoUpgradeMinorVersion\": true,",
+        "        \"settings\": {",
+        "            \"fileUris\": [",
+        "                \"[concat(parameters('${3:artifactsLocation}'), '/${4:scripts}/${5:customScript.sh}', parameters('${6:artifactsLocationSasToken}'))]\"",
+        "            ],",
+        "            \"commandToExecute\": \"sh ${5:customScript.sh}\"",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "description": "Custom script extension for Linux Virtual Machine"
 },
 "Load Balancer External": {
     "prefix": "arm-loadbalancer-external",
@@ -1085,28 +1093,6 @@
     ],
     "description": "MySQL Database"
 },
-"Nested Deployment": {
-    "prefix": "arm-nested",
-    "body": [
-        "{",
-        "    \"name\": \"${1:nestedDeployment1}\","
-        "    \"type\": \"Microsoft.Resources/deployments\",",
-        "    \"apiVersion\": \"2018-05-01\",",
-        "    \"tags\": {",
-        "        \"displayName\": \"${1:nestedDeployment1}\"",
-        "    },",
-        "    \"properties\": {",
-        "        \"mode\": \"Incremental\",",
-        "        \"templateLink\": {",
-        "            \"uri\": \"[concat(parameters('_artifactsLocation'), '/${2:nestedTemplates}/${3:nestedTemplate.json}', parameters('_artifactsLocationSasToken'))]\",",
-        "            \"contentVersion\": \"1.0.0.0\"",
-        "        },",
-        "        \"parameters\": {}",
-        "    }",
-        "}"
-    ],
-    "description": "Nested Deployment"
-},
 "Network Interface": {
     "prefix": "arm-nic",
     "body": [
@@ -1167,39 +1153,6 @@
         "}"
     ],
     "description": "Network Security Group"
-},
-"PowerShell DSC Extension": {
-    "prefix": "arm-dsc",
-    "body": [
-        "{",
-        "    \"name\": \"${1:windowsVM1}/${2:dscScript1}\",",
-        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2018-10-01\",",
-        "    \"location\": \"[resourceGroup().location]\",",
-        "    \"tags\": {",
-        "        \"displayName\": \"${1:windowsVM1}/${2:dscScript1}\"",
-        "    },",
-        "    \"dependsOn\": [",
-        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\"",
-        "    ],",
-        "    \"properties\": {",
-        "        \"publisher\": \"Microsoft.Powershell\",",
-        "        \"type\": \"DSC\",",
-        "        \"typeHandlerVersion\": \"2.9\",",
-        "        \"autoUpgradeMinorVersion\": true,",
-        "        \"settings\": {",
-        "            \"modulesUrl\": \"[concat(parameters('_artifactsLocation'), '/${DSCModules}/${dsc.zip}')]\",",
-        "            \"sasToken\": \"[parameters('_artifactsLocationSasToken')]\",",
-        "            \"configurationFunction\": \"${Configure}\",",
-        "            \"properties\": {",
-        "                \"nodeName\": \"${1:windowsVM1}\"",
-        "            }",
-        "        },",
-        "        \"protectedSettings\": {}",
-        "    }",
-        "}"
-    ],
-    "description": "PowerShell DSC Extension"
 },
 "Public IP Address": {
     "prefix": "arm-ip",
@@ -1264,7 +1217,7 @@
         "{",
         "    \"name\": \"${1:redisCache1}\",",
         "    \"type\": \"Microsoft.Cache/Redis\",",
-        "    \"apiVersion\": \"2018-03-01\",",
+        "    \"apiVersion\": \"2015-08-01\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${1:redisCache1}\"",
@@ -1280,20 +1233,6 @@
         "}"
     ],
     "description": "Redis Cache"
-},
-"Resource Group": {
-    "prefix": "arm-group",
-    "body": [
-        "{",
-        "    \"name\": \"${1:resourceGroup1}\",",
-        "    \"type\": \"Microsoft.Resources/resourceGroups\",",
-        "    \"apiVersion\": \"2018-05-01\",",
-        "    \"location\": \"${2:location}\",",
-        "    \"tags\": {},",
-        "    \"properties\": {}",
-        "}",
-    ],
-    "description": "Resource Group"
 },
 "Route Table": {
     "prefix": "arm-route-table",
@@ -1327,7 +1266,7 @@
         "{",
         "    \"name\": \"${1:sqlServer1}/${2:sqlDatabase1}\",",
         "    \"type\": \"Microsoft.Sql/servers/databases\",",
-        "    \"apiVersion\": \"2017-10-01-preview\",",
+        "    \"apiVersion\": \"2014-04-01\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${2:sqlDatabase1}\"",
@@ -1410,15 +1349,14 @@
         "{",
         "    \"name\": \"${1:storageaccount1}\",",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2018-07-01\",",
+        "    \"apiVersion\": \"2015-06-15\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${1:storageaccount1}\"",
         "    },",
-        "    \"sku\": {",
-        "        \"name\": \"Standard_LRS\"",
+        "    \"properties\": {",
+        "        \"accountType\": \"Standard_LRS\"",
         "    }",
-        "    \"kind\": \"StorageV2\","
         "}"
     ],
     "description": "Storage Account"
@@ -1468,7 +1406,7 @@
         "{",
         "    \"name\": \"[toLower('${1:ubuntuVM1}storage')]\",",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2018-07-01\",",
+        "    \"apiVersion\": \"2015-06-15\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${1:ubuntuVM1} Storage Account\"",
@@ -1548,7 +1486,7 @@
         "{",
         "    \"name\": \"${1:ubuntuVM1}\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
-        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"apiVersion\": \"2017-03-30\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"dependsOn\": [",
         "        \"[concat('Microsoft.Storage/storageAccounts/', toLower('${1:ubuntuVM1}storage'))]\",",
@@ -1734,15 +1672,15 @@
         "    }",
         "}"
     ],
-    "description": "Web App"
+    "description": "Web Application"
 },
-"Web Deploy for Web Apps": {
+"Web Deploy for Web App": {
     "prefix": "arm-web-app-deploy",
     "body": [
         "{",
         "    \"name\": \"Deploy-${1:webApp1}\",",
-        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
-        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"type\": \"Microsoft.Web/sites/extensions\",",
+        "    \"apiVersion\": \"2015-08-01\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"dependsOn\": [",
         "        \"Microsoft.Web/sites/${1:webApp1}\"",
@@ -1760,7 +1698,7 @@
         "    }",
         "}"
     ],
-    "description": "Web Deploy for Web Apps"
+    "description": "Web Deploy for a Web Application"
 },
 "Windows Virtual Machine": {
     "prefix": "arm-vm-windows",
@@ -1768,7 +1706,7 @@
         "{",
         "    \"name\": \"[toLower('${1:windowsVM1}storage')]\",",
         "    \"type\": \"Microsoft.Storage/storageAccounts\",",
-        "    \"apiVersion\": \"2018-07-01\",",
+        "    \"apiVersion\": \"2015-06-15\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"tags\": {",
         "        \"displayName\": \"${1:windowsVM1} Storage Account\"",
@@ -1848,7 +1786,7 @@
         "{",
         "    \"name\": \"${1:windowsVM1}\",",
         "    \"type\": \"Microsoft.Compute/virtualMachines\",",
-        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"apiVersion\": \"2017-03-30\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"dependsOn\": [",
         "        \"[concat('Microsoft.Storage/storageAccounts/', toLower('${1:windowsVM1}storage'))]\",",
@@ -1874,6 +1812,8 @@
         "                \"version\": \"latest\"",
         "            },",
         "            \"osDisk\": {",
+        "                \"name\": \"${1:windowsVM1}OSDisk\",",
+        "                \"caching\": \"ReadWrite\",",
         "                \"createOption\": \"FromImage\"",
         "            }",
         "        },",
@@ -1895,7 +1835,7 @@
         "        {",
         "            \"name\": \"${1:windowsVM1}AzureDiagnostics\",",
         "            \"type\": \"extensions\",",
-        "            \"apiVersion\": \"2018-10-01\",",
+        "            \"apiVersion\": \"2015-06-15\",",
         "            \"location\": \"[resourceGroup().location]\",",
         "            \"tags\": {",
         "                \"displayName\": \"${1:windowsVM1}AzureDiagnostics\"",
@@ -1924,7 +1864,37 @@
     ],
     "description": "Windows Virtual Machine"
 },
-"Windows Virtual Machine Diagnostics Extension": {
+"Windows VM Custom Script": {
+    "prefix": "arm-vm-script-windows",
+    "body": [
+        "{",
+        "    \"name\": \"${1:windowsVM1}/${2:customScript1}\",",
+        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
+        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${2:customScript1} for Windows VM\"",
+        "    },",
+        "    \"dependsOn\": [",
+        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"publisher\": \"Microsoft.Compute\",",
+        "        \"type\": \"CustomScriptExtension\",",
+        "        \"typeHandlerVersion\": \"1.4\",",
+        "        \"autoUpgradeMinorVersion\": true,",
+        "        \"settings\": {",
+        "            \"fileUris\": [",
+        "                \"[concat(parameters('${3:artifactsLocation}'), '/${4:scripts}/${5:customScript.ps1}', parameters('${6:artifactsLocationSasToken}'))]\"",
+        "            ],",
+        "            \"commandToExecute\": \"powershell -ExecutionPolicy Bypass -file ${5:customScript.ps1}\"",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "description": "Custom script extension for a Windows Virtual Machine"
+},
+"Windows VM Diagnostics Extension": {
     "prefix": "arm-vm-windows-diagnostics",
     "body": [
         "{",
@@ -1956,5 +1926,38 @@
         "    }",
         "}"
     ],
-    "description": "Windows Virtual Machine Diagnostics Extension"
+    "description": "Diagnostics Extension for a Windows Virtual Machine"
+},
+"Windows VM DSC PowerShell Script": {
+    "prefix": "arm-vm-dsc",
+    "body": [
+        "{",
+        "    \"name\": \"${1:windowsVM1}/${2:dscScript1}\",",
+        "    \"type\": \"Microsoft.Compute/virtualMachines/extensions\",",
+        "    \"apiVersion\": \"2018-10-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${1:windowsVM1}/${2:dscScript1}\"",
+        "    },",
+        "    \"dependsOn\": [",
+        "        \"Microsoft.Compute/virtualMachines/${1:windowsVM1}\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"publisher\": \"Microsoft.Powershell\",",
+        "        \"type\": \"DSC\",",
+        "        \"typeHandlerVersion\": \"2.9\",",
+        "        \"autoUpgradeMinorVersion\": true,",
+        "        \"settings\": {",
+        "            \"modulesUrl\": \"[concat(parameters('_artifactsLocation'), '/${DSCModules}/${dsc.zip}')]\",",
+        "            \"sasToken\": \"[parameters('_artifactsLocationSasToken')]\",",
+        "            \"configurationFunction\": \"${Configure}\",",
+        "            \"properties\": {",
+        "                \"nodeName\": \"${1:windowsVM1}\"",
+        "            }",
+        "        },",
+        "        \"protectedSettings\": {}",
+        "    }",
+        "}"
+    ],
+    "description": "Desired State Configuration PowerShell script for a Windows Virtual Machine"
 },
