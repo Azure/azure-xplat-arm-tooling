@@ -68,7 +68,7 @@
     "prefix": "arm-nested",
     "body": [
         "{",
-        "    \"name\": \"${1:nestedDeployment1}\","
+        "    \"name\": \"${1:nestedDeployment1}\",",
         "    \"type\": \"Microsoft.Resources/deployments\",",
         "    \"apiVersion\": \"2016-09-01\",",
         "    \"tags\": {",
@@ -356,7 +356,7 @@
         "    \"tags\": {},",
         "    \"properties\": {",
         "        \"sku\": {",
-        "            \"name\": \"${2|Free,Basic|}\","
+        "            \"name\": \"${2|Free,Basic|}\",",
         "        }",
         "    }",
         "}"
@@ -561,7 +561,7 @@
         "    \"apiVersion\": \"2017-10-01\",",
         "    \"location\": \"[resourceGroup().location]\",",
         "    \"sku\": {",
-        "        \"name\": \"${2|Classic,Basic,Standard,Premium|}\""
+        "        \"name\": \"${2|Classic,Basic,Standard,Premium|}\",",
         "    },",
         "    \"properties\": {",
         "        \"adminUserEnabled\": ${3|true,false|}",
@@ -1132,7 +1132,7 @@
         "                    \"priority\": ${10:100},",
         "                    \"direction\": \"${11|Inbound,Outbound|}\"",
         "                }",
-        "            }"
+        "            }",
         "        ]",
         "    }",
         "}"
