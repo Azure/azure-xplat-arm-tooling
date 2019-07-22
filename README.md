@@ -15,10 +15,8 @@ See [Authoring Azure Resource Manager Templates](https://azure.microsoft.com/en-
 * [Visual Studio Code](https://code.visualstudio.com/Download)
 
 ## Configure Visual Studio Code to Use the JSON Snippets
-* Launch Visual Studio Code.
-* Navigate to `File > Open File` and open **VSCode\armsnippets.json**
-* Copy its contents to the clipboard.
-* Navigate to `File > Preferences > User Snippets > JSON`.
+* Copy the contents of **VSCode\armsnippets.json** to the clipboard
+* In Visual Studio Code, navigate to `File > Preferences > User Snippets > JSON`.
 * Append (paste) the contents of **VSCode\armsnippets.json** into your user snippets file before the final **"}"**.
 * Save and close the user snippets file.
 
