@@ -623,7 +623,7 @@
         "    \"dependsOn\": [",
         "        \"[resourceId('Microsoft.Network/publicIPAddresses', '${34:publicIPAddress1}')]\"",
         "    ]",
-        "},"
+        "},",
         "{",
         "    \"name\": \"${34:publicIPAddress1}\",",
         "    \"type\": \"Microsoft.Network/publicIPAddresses\",",
