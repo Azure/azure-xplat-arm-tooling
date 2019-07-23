@@ -614,7 +614,7 @@
         "                       \"id\": \"${[resourceId('virtualNetworkResourceGroup', 'Microsoft.Network/virtualNetworks/subnets', 'virtualNetworkName', 'AzureFirewallSubnet')]}\"",
         "                   },",
         "                   \"publicIPAddress\": {",
-        "                       \"id\": \"${33:[resourceId('Microsoft.Network/publicIPAddresses', '${34:publicIPAddress1}')]}\"",
+        "                       \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses', '${34:publicIPAddress1}')]\"",
         "                   }",
         "               }",
         "           }",
