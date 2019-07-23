@@ -1,4 +1,4 @@
-/*
+{/*
 // Azure Resource Manager Template Snippets 
 */
 "Azure Resource Manager (ARM) Template": {
@@ -518,27 +518,27 @@
         "    \"properties\": {",
         "       \"applicationRuleCollections\": [",
         "           {",
-        "               \"name\": \"${2:appCollectionName1}\",",
+        "               \"name\": \"${1:appCollectionName1}\",",
         "               \"properties\": {",
-        "                   \"priority\": \"${3|100,1-65000|}\",",
+        "                   \"priority\": \"${2|100,1-65000|}\",",
         "                   \"action\": {",
-        "                       \"type\": \"${4|Allow,Deny|}\"",
+        "                       \"type\": \"${3|Allow,Deny|}\"",
         "                   },",
         "                   \"rules\": [",
         "                       {",
-        "                           \"name\": \"${5:appRuleName1}\",",
-        "                           \"description\": \"${6:appRuleDescription}\",",
+        "                           \"name\": \"${4:appRuleName1}\",",
+        "                           \"description\": \"${5:appRuleDescription}\",",
         "                           \"sourceAddresses\": [",
-        "                               \"${7:10.0.0.4}\"",
+        "                               \"${6:10.0.0.4}\"",
         "                           ],",
         "                           \"protocols\": [",
         "                              {",
-        "                                  \"protocolType\": \"${8|Http,Https,Mssql|}\",",
-        "                                  \"port\": \"${9|80,443,1433|}\"",
+        "                                  \"protocolType\": \"${7|Http,Https,Mssql|}\",",
+        "                                  \"port\": \"${8|80,443,1433|}\"",
         "                              }",
         "                           ],",
         "                           \"targetFqdns\": [",
-        "                               \"${10|www.microsoft.com,*.microsoft.com|}\"",
+        "                               \"${9|www.microsoft.com,*.microsoft.com|}\"",
         "                           ],",
         "                           \"fqdnTags\": []",
         "                       }",
@@ -2088,3 +2088,4 @@
     ],
     "description": "Desired State Configuration PowerShell script for a Windows Virtual Machine"
 },
+}
