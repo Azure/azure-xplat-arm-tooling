@@ -1,4 +1,4 @@
-/*
+{/*
 // Azure Resource Manager Template Snippets 
 */
 "Azure Resource Manager (ARM) Template": {
@@ -2088,3 +2088,4 @@
     ],
     "description": "Desired State Configuration PowerShell script for a Windows Virtual Machine"
 },
+}
