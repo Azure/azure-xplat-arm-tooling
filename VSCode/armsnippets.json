@@ -611,7 +611,7 @@
         "               \"name\": \"${31:ipConfigName}\",",
         "               \"properties\": {",
         "                   \"subnet\": {",
-        "                       \"id\": \"${[resourceId('virtualNetworkResourceGroup', 'Microsoft.Network/virtualNetworks/subnets', 'virtualNetworkName', 'AzureFirewallSubnet')]}\"",
+        "                       \"id\": \"[resourceId('${32:virtualNetworkResourceGroup}', 'Microsoft.Network/virtualNetworks/subnets', '${33:virtualNetworkName}', 'AzureFirewallSubnet')]\"",
         "                   },",
         "                   \"publicIPAddress\": {",
         "                       \"id\": \"[resourceId('Microsoft.Network/publicIPAddresses', '${34:publicIPAddress1}')]\"",
