@@ -490,6 +490,23 @@
     ],
     "description": "Automation Variable"
 },
+"Automation Module":{
+    "prefix": "arm-automation-module",
+    "body": [
+        "{",
+        "    \"name\": \"[concat('${2:automationAccount1}', '/${1:automationVariable1}')]\",",
+        "    \"type\": \"Microsoft.Automation/automationAccounts/modules\",",
+        "    \"apiVersion\": \"2015-10-31\",",
+        "    \"dependsOn\": [",
+        "        \"[resourceId('Microsoft.Automation/automationAccounts', '${2:automationAccount1}')]\"",
+        "    ],",
+        "    \"properties\": {",
+        "        \"contentLink\": \"{}\"",
+        "    }",
+        "}"
+    ],
+    "description": "Automation Module"
+},
 "Availability Set": {
     "prefix": "arm-availability-set",
     "body": [
