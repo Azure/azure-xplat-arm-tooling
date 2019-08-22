@@ -1019,7 +1019,7 @@
         "    }",
         "}"
     ],
-    "description": "External Load Balancer",
+    "description": "External Load Balancer"
 },
 "Load Balancer Internal": {
     "prefix": "arm-loadbalancer-internal",
@@ -1085,7 +1085,7 @@
         "    }",
         "}"
     ],
-    "description": "Load Balancer Internal",
+    "description": "Load Balancer Internal"
 },
 "Log Analytics Solution": {
     "prefix": "arm-log-analytics-solution",
@@ -1216,7 +1216,7 @@
         "    }",
         "}"
     ],
-    "description": "Media Services account",
+    "description": "Media Services account"
 },
 "MySQL Database": {
     "prefix": "arm-mysql",
@@ -1337,7 +1337,7 @@
         "    }",
         "}"
     ],
-    "description": "Public IP Prefix",
+    "description": "Public IP Prefix"
 },
 "Recovery Service Vault": {
     "prefix": "arm-recovery-service-vault",
@@ -1402,7 +1402,7 @@
         "    }",
         "}"
     ],
-    "description": "Route Table",
+    "description": "Route Table"
 },
 "SQL Database": {
     "prefix": "arm-sql-db",
@@ -1542,7 +1542,7 @@
         "    }",
         "}"
     ],
-    "description": "Traffic Manager Profile",
+    "description": "Traffic Manager Profile"
 },
 "Ubuntu Virtual Machine": {
     "prefix": "arm-vm-ubuntu",
@@ -2104,4 +2104,4 @@
         "}"
     ],
     "description": "Desired State Configuration PowerShell script for a Windows Virtual Machine"
-},
+}
