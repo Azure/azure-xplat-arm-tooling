@@ -1,6 +1,20 @@
 /*
 // Azure Resource Manager Template Snippets 
 */
+"Azure Resource Manager (ARM) Subscription Deployment Template": {
+    "prefix": "arms!",
+    "body": [
+        "{",
+        "    \"$$schema\": \"https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#\",",
+        "    \"contentVersion\": \"1.0.0.1\",",
+        "    \"parameters\": {},",
+        "    \"variables\": {},",
+        "    \"resources\": [],",
+        "    \"outputs\": {}",
+        "}"
+    ],
+    "description": "Skeleton ARM Subscription Deployment Template"
+},
 "Azure Resource Manager (ARM) Template": {
     "prefix": "arm!",
     "body": [
@@ -63,6 +77,19 @@
         "}"
     ],
     "description": "ARM Template Parameter value used in a azuredeploy.parameters.json file"
+},
+"Resource Group": {
+    "prefix": "arm-rg",
+    "body": [
+        "{",
+        "    \"name\": \"${1:resourceGroup1}\",",
+        "    \"type\": \"Microsoft.Resources/resourceGroups\",",
+        "    \"apiVersion\": \"2018-05-01\",",
+        "    \"location\": \"${2:location}\",",
+        "    \"properties\": {}",
+        "}"
+    ],
+    "description": "Resource Group"
 },
 "Nested Deployment": {
     "prefix": "arm-nested",
