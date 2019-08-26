@@ -129,7 +129,7 @@
         "        \"notificationSenderEmail\": \"${2:notification@example.net}\",",
         "        \"hostnameConfigurations\": [",
         "            {",
-        "                \"type\": \"${3:proxy}\",",
+        "                \"type\": \"${3:Proxy}\",",
         "                \"hostName\": \"${4:myHostname.example.net}\"",
         "            }",
         "        ],",
