@@ -110,6 +110,39 @@
     ],
     "description": "Nested Deployment"
 },
+"API Management": {
+    "prefix": "arm-apim",
+    "body": [
+        "{",
+        "    \"name\": \"${1:apiManagement1}\",",
+        "    \"type\": \"Microsoft.ApiManagement/service\",",
+        "    \"apiVersion\": \"2019-01-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${1:apiManagement1}\"",
+        "    },",
+        "    \"sku\": {",
+        "        \"name\": \"Developer\",",
+        "        \"capacity\": 1",
+        "    },",
+        "    \"properties\": {",
+        "        \"notificationSenderEmail\": \"${2:notification@example.net}\",",
+        "        \"hostnameConfigurations\": [",
+        "            {",
+        "                \"type\": \"${3:proxy}\",",
+        "                \"hostName\": \"${4:myHostname.example.net}\"",
+        "            }",
+        "        ],",
+        "        \"virtualNetworkConfiguration\": {",
+        "            \"subnetResourceId\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', ${5:'apim-vnet'}, ${6:'apim-subnet'})]\"",
+        "        },",
+        "        \"virtualNetworkType\": \"${7:None}\",",
+        "        \"publisherEmail\": \"${8:name@example.net}\",",
+        "        \"publisherName\": \"${9:J. Doe}\"",
+        "    }",
+        "}"
+    ]
+},
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
     "body": [
