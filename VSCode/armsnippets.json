@@ -1,6 +1,20 @@
 /*
 // Azure Resource Manager Template Snippets 
 */
+"Azure Resource Manager (ARM) Subscription Deployment Template": {
+    "prefix": "arms!",
+    "body": [
+        "{",
+        "    \"$$schema\": \"https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#\",",
+        "    \"contentVersion\": \"1.0.0.1\",",
+        "    \"parameters\": {},",
+        "    \"variables\": {},",
+        "    \"resources\": [],",
+        "    \"outputs\": {}",
+        "}"
+    ],
+    "description": "Skeleton ARM Subscription Deployment Template"
+},
 "Azure Resource Manager (ARM) Template": {
     "prefix": "arm!",
     "body": [
@@ -65,6 +79,19 @@
     ],
     "description": "ARM Template Parameter value used in a azuredeploy.parameters.json file"
 },
+"Resource Group": {
+    "prefix": "arm-rg",
+    "body": [
+        "{",
+        "    \"name\": \"${1:resourceGroup1}\",",
+        "    \"type\": \"Microsoft.Resources/resourceGroups\",",
+        "    \"apiVersion\": \"2018-05-01\",",
+        "    \"location\": \"${2:location}\",",
+        "    \"properties\": {}",
+        "}"
+    ],
+    "description": "Resource Group"
+},
 "Nested Deployment": {
     "prefix": "arm-nested",
     "body": [
@@ -83,6 +110,39 @@
         "}"
     ],
     "description": "Nested Deployment"
+},
+"API Management": {
+    "prefix": "arm-apim",
+    "body": [
+        "{",
+        "    \"name\": \"${1:apiManagement1}\",",
+        "    \"type\": \"Microsoft.ApiManagement/service\",",
+        "    \"apiVersion\": \"2019-01-01\",",
+        "    \"location\": \"[resourceGroup().location]\",",
+        "    \"tags\": {",
+        "        \"displayName\": \"${1:apiManagement1}\"",
+        "    },",
+        "    \"sku\": {",
+        "        \"name\": \"Developer\",",
+        "        \"capacity\": 1",
+        "    },",
+        "    \"properties\": {",
+        "        \"notificationSenderEmail\": \"${2:notification@example.net}\",",
+        "        \"hostnameConfigurations\": [",
+        "            {",
+        "                \"type\": \"${3:Proxy}\",",
+        "                \"hostName\": \"${4:myHostname.example.net}\"",
+        "            }",
+        "        ],",
+        "        \"virtualNetworkConfiguration\": {",
+        "            \"subnetResourceId\": \"[resourceId('Microsoft.Network/virtualNetworks/subnets', ${5:'apim-vnet'}, ${6:'apim-subnet'})]\"",
+        "        },",
+        "        \"virtualNetworkType\": \"${7:None}\",",
+        "        \"publisherEmail\": \"${8:name@example.net}\",",
+        "        \"publisherName\": \"${9:J. Doe}\"",
+        "    }",
+        "}"
+    ]
 },
 "App Service Plan (Server Farm)": {
     "prefix": "arm-plan",
@@ -1439,7 +1499,7 @@
         "    }",
         "}"
     ],
-    "description": "External Load Balancer",
+    "description": "External Load Balancer"
 },
 "Load Balancer Internal": {
     "prefix": "arm-loadbalancer-internal",
@@ -1505,7 +1565,7 @@
         "    }",
         "}"
     ],
-    "description": "Load Balancer Internal",
+    "description": "Load Balancer Internal"
 },
 "Log Analytics Solution": {
     "prefix": "arm-log-analytics-solution",
@@ -1636,7 +1696,7 @@
         "    }",
         "}"
     ],
-    "description": "Media Services account",
+    "description": "Media Services account"
 },
 "MySQL Database": {
     "prefix": "arm-mysql",
@@ -1779,7 +1839,7 @@
         "    }",
         "}"
     ],
-    "description": "Public IP Prefix",
+    "description": "Public IP Prefix"
 },
 "Recovery Service Vault": {
     "prefix": "arm-recovery-service-vault",
@@ -1844,7 +1904,7 @@
         "    }",
         "}"
     ],
-    "description": "Route Table",
+    "description": "Route Table"
 },
 "Route Table Route": {
     "prefix": "arm-route-table-route",
@@ -2009,7 +2069,7 @@
         "    }",
         "}"
     ],
-    "description": "Traffic Manager Profile",
+    "description": "Traffic Manager Profile"
 },
 "Ubuntu Virtual Machine": {
     "prefix": "arm-vm-ubuntu",
@@ -2571,4 +2631,6 @@
         "}"
     ],
     "description": "Desired State Configuration PowerShell script for a Windows Virtual Machine"
-},
+
+}
+
